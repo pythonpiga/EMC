@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.broad.emc.module.dao.CpxxDao">
+
+    <select id="selectByNdAndCplx" resultType="com.broad.emc.module.entity.Cpxx">
+        select *  from ht_cpdm 
+        where 1=1
+        <if test="nd!=null &amp; nd!=''">
+           and cwnd=#{nd}
+        </if>
+        <if test="cplx!=null &amp; cplx!=''">
+           and htfylb=#{cplx}
+        </if>
+        
+    </select>
+
+    <update id="updateByCpbm"  useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.Cpxx">
+        UPDATE ht_cpdm 
+        SET cpbh =#{cpbh},
+        htfylb =#{htfylb},
+        cpmc =#{cpmc},
+        cpgg =#{cpgg},
+        dw =#{dw},
+        xmbh =#{xmbh},
+        bzbj =#{bzbj},
+        cpgs =#{cpgs},
+        cwnd =#{cwnd},
+        eszjf =#{eszjf},
+        fydcpbz =#{fydcpbz},
+        bz =#{bz},
+        tcbl=#{tcbl},
+        csrpolicy=#{csrpolicy},
+        lrr =#{lrr},
+        lrsj =#{lrsj} 
+        WHERE
+            cpbh =#{cpbh}
+        
+    </update>
+
+</mapper>

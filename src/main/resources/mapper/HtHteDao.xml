@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.broad.emc.module.dao.HtHteDao">
+
+    <select id="queryAnnualContractByHtsno" resultType="com.broad.emc.module.vo.HtHteVo">
+          select 
+            id,
+            yynd,
+            qsrq,
+            jzrq,
+            yyys,
+            case when yyzt=1 then '已运营'
+            else  '未运营'
+            end as yyzt ,   
+            khsbtze as khsbctze,
+            htje as nffje,
+            gdfje as gdf,
+            sbfte as sbtzftje,
+            jngze as jngzje,
+            jge as jgje,
+            gcwbe as gcwbje,
+            fwxye,
+            tzje,
+            tcje as nhte,
+            khdkdje ,
+            sbyjzle,
+            fk10date_sbyjzl as jsbyjzlr,
+            yyyjzle,
+            fk10date_yyyjzl as jyyyjzlr,
+            fkfs,
+            jnfxe,
+            jnfxbl,
+            fk10date as fkrq,
+            case when ktcbz='1' then '是'
+            else '否'  
+            end as ktbz,
+            case when fjbz='1' then '是'
+            else '否' 
+            end as fkfjbz,
+            case when bsyjbz='1' then '是'
+            else '否' 
+            end as bjyj,
+            xgr,
+            xgsj,
+            lrr,
+            lrsj,
+            zglrtcje 
+          from ht_hte 
+          where  (flag is null or flag='')    -- flag=0 删除标识
+          and ht_sno=#{htsno} 
+          order by id asc
+
+    </select>
+
+    <select id="queryHistoryById" resultType="com.broad.emc.module.vo.HtHtetzxxVo">
+         select 
+			id ,
+            nhteid,
+            ht_sno as htsno,
+            yynd,
+            oldqsrq,
+            oldjzrq,
+            oldkhsbtze,
+            oldhtje,
+            oldgdfje,
+            oldsbfte,
+            oldgcwbe ,
+            oldjngze ,
+            oldjge ,
+            oldfwxye,
+            oldjnfxbl  ,
+            oldjnfxe,
+            oldtcje ,
+            oldfkfs ,
+            oldzglrtcje ,
+            oldyyzt,
+            oldktcbz,
+            oldsbyjzle ,
+            oldyyyjzle,
+            oldfk10sbyjzle as oldjsbyjzlr,
+            oldfk10yyyjzle as oldjyyyjzlr,
+            newqsrq,
+            newjzrq,
+            newkhsbtze,
+            newhtje,
+            newgdfje,
+            newsbfte,
+            newgcwbe ,
+            newjngze ,
+            newjge ,
+            newfwxye,
+            newjnfxbl  ,
+            newjnfxe,
+            newtcje ,
+            newfkfs ,
+            newzglrtcje ,
+            newyyzt,
+            newktcbz,
+            newsbyjzle ,
+            newyyyjzle,
+            newfk10sbyjzle as newjsbyjzlr,
+            newfk10yyyjzle as newjyyyjzlr,
+            xgr,
+            xgsj,
+            tzsm
+	     from ht_htetzxx
+	     where nhteid=#{id}
+	     order by xgsj desc
+
+    </select>
+
+
+    <insert id="addAnnualContract" useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtHteVo">      
+       insert into ht_hte(
+        ht_sno,
+        id,
+        yynd,
+        qsrq,
+        jzrq,
+        yyys,
+        yyzt,   
+        khsbtze,
+        htje ,
+        gdfje,
+        sbfte ,
+        jngze,
+        jge ,
+        gcwbe ,
+        fwxye,
+        tzje,
+        tcje ,
+        khdkdje ,
+        sbyjzle,
+        fk10date_sbyjzl,
+        yyyjzle,
+        fk10date_yyyjzl,
+        fkfs,
+        jnfxe,
+        jnfxbl,
+        fk10date,
+        ktcbz,
+        fjbz,
+        bsyjbz,
+        xgr,
+        xgsj,
+        nd,
+        lrr,
+        lrsj
+        ) values (
+            #{htsno},
+            (select max(id)+1 from ht_hte ),
+            #{yynd},
+            CONVERT(DATETIME, #{qsrq}, 102) ,
+            CONVERT(DATETIME, #{jzrq}, 102) ,
+            #{yyys},
+            #{yyzt },
+            #{khsbctze},
+            #{nffje},
+            #{gdf},
+            #{sbtzftje},
+            #{jngzje},
+            #{jgje},
+            #{gcwbje},
+            #{fwxye},
+            #{tzje},
+            #{nhte},
+            #{khdkdje},
+            #{sbyjzle},
+            CONVERT(DATETIME, #{jsbyjzlr}, 102) ,
+            #{yyyjzle},
+            CONVERT(DATETIME, #{jyyyjzlr}, 102) ,
+            #{fkfs},
+            #{jnfxe},
+            #{jnfxbl},
+            CONVERT(DATETIME, #{fkrq}, 102) ,
+            #{ktbz},
+            #{fkfjbz},
+            #{bjyj},
+            #{xgr},
+            #{xgsj},
+            case  
+                when (select ISNULL(( select max(nd) from ht_hte where ht_sno=#{htsno} ), '')) ='0' then '1'
+                else (select max(nd)+1 from ht_hte where ht_sno=#{htsno} )
+            end ,
+            #{lrr},
+            #{lrsj}
+            
+        )
+
+    </insert>
+
+    <update id="updateByIdAndHtsno"  parameterType="com.broad.emc.module.vo.HtHteVo">
+        update ht_hte
+         set
+            yynd=#{yynd},
+            qsrq= CONVERT(DATETIME, #{qsrq}, 102),
+            jzrq= CONVERT(DATETIME, #{jzrq}, 102),
+            khsbtze=#{ khsbctze },
+            htje = #{ nffje},
+            gdfje = #{ gdf },
+            sbfte = #{ sbtzftje},
+            gcwbe = #{ gcwbje},
+            jngze = #{ jngzje},
+            jge = #{ jgje},
+            fwxye = #{fwxye},
+            jnfxbl = #{jnfxbl} ,
+            jnfxe = #{jnfxe },
+            tcje = #{ nhte},
+            fkfs = #{ fkfs},
+            zglrtcje = #{zglrtcje },
+            yyzt = #{ yyzt},
+            ktcbz = #{ ktbz},
+            sbyjzle = #{ sbyjzle},
+            yyyjzle = #{ yyyjzle},
+            fk10date_sbyjzl = CONVERT(DATETIME, #{jsbyjzlr}, 102),
+            fk10date_yyyjzl = CONVERT(DATETIME, #{jyyyjzlr}, 102),
+            xgr = #{ xgr},
+            xgsj = CONVERT(DATETIME, #{xgsj}, 102)											 
+        where ht_sno=#{htsno}  and id =#{id}
+
+    </update>
+
+    <insert id="addRecord" useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtHtetzxxVo">      
+        insert into  ht_htetzxx (
+            id,
+            nhteid,
+            ht_sno,
+            yynd,
+            oldqsrq,
+            oldjzrq,
+            oldkhsbtze,
+            oldhtje,
+            oldgdfje,
+            oldsbfte,
+            oldgcwbe ,
+            oldjngze ,
+            oldjge ,
+            oldfwxye,
+            oldjnfxbl  ,
+            oldjnfxe,
+            oldtcje ,
+            oldfkfs ,
+            oldzglrtcje ,
+            oldyyzt,
+            oldktcbz,
+            oldsbyjzle ,
+            oldyyyjzle,
+            oldfk10sbyjzle,
+            oldfk10yyyjzle,
+            
+            newqsrq,
+            newjzrq,
+            newkhsbtze,
+            newhtje,
+            newgdfje,
+            newsbfte,
+            newgcwbe ,
+            newjngze ,
+            newjge ,
+            newfwxye,
+            newjnfxbl  ,
+            newjnfxe,
+            newtcje ,
+            newfkfs ,
+            newzglrtcje ,
+            newyyzt,
+            newktcbz,
+            newsbyjzle ,
+            newyyyjzle,
+            newfk10sbyjzle,
+            newfk10yyyjzle,
+            xgr,
+            xgsj,
+            tzsm
+        ) VALUES (
+            (select max(id)+1 from ht_htetzxx ),
+            #{ nhteid },
+            #{ htsno },
+            #{yynd},
+            CONVERT(DATETIME, #{oldqsrq}, 102),
+            CONVERT(DATETIME, #{oldjzrq}, 102),
+            #{ oldkhsbtze },
+            #{ oldhtje },
+            #{ oldgdfje },
+            #{ oldsbfte },
+            #{ oldgcwbe  },
+            #{ oldjngze  },
+            #{ oldjge  },
+            #{ oldfwxye },
+            #{ oldjnfxbl   },
+            #{ oldjnfxe },
+            #{ oldtcje  },
+            #{ oldfkfs  },
+            #{  oldzglrtcje  },
+            #{ oldyyzt },
+            #{ oldktcbz },
+            #{ oldsbyjzle  },
+            #{ oldyyyjzle },
+            CONVERT(DATETIME, #{oldjsbyjzlr}, 102),
+            CONVERT(DATETIME, #{oldjyyyjzlr}, 102),
+            
+            CONVERT(DATETIME, #{newqsrq}, 102),
+            CONVERT(DATETIME, #{newjzrq}, 102),
+            #{ newkhsbtze },
+            #{ newhtje },
+            #{ newgdfje },
+            #{ newsbfte },
+            #{ newgcwbe  },
+            #{ newjngze  },
+            #{ newjge  },
+            #{ newfwxye },
+            #{ newjnfxbl   },
+            #{  newjnfxe },
+            #{ newtcje  },
+            #{ newfkfs  },
+            #{ newzglrtcje  },
+            #{ newyyzt },
+            #{ newktcbz },
+            #{  newsbyjzle  },
+            #{  newyyyjzle },
+            CONVERT(DATETIME, #{newjsbyjzlr}, 102),
+            CONVERT(DATETIME, #{newjyyyjzlr}, 102),
+            
+            #{  xgr },
+            CONVERT(DATETIME, #{xgsj}, 120),
+            #{  tzsm }
+        )
+    </insert>
+
+    <select id="getYwyListByHtywyvo" resultType="com.broad.emc.module.vo.HtywyVo">
+         select 
+            ht_sws.sws_mc as sws,
+            ht_ywy.ywy_id as dkxh,
+            ht_ywy.ywy_xm as xm,
+            case 
+                when ht_ywy_bm.zzbz='0' then '离职'
+                when ht_ywy_bm.zzbz='1' then '在职'
+                else '调岗'
+            end as zzbz,
+            case 
+                when ht_ywy_bm.gsbz='X' then '用中节能推广部'
+                else '能源公司运营'
+            end as gsbm,
+            ht_ywy_bm.qsrq,
+            ht_ywy_bm.jzrq,
+            case 
+                when ht_ywy.sfgcs='0' then '否'
+                else '是'
+            end as gcs
+         from ht_ywy left join ht_ywy_bm on ht_ywy_bm.ywy_id=ht_ywy.ywy_id
+         left join ht_sws on ht_ywy_bm.sws_id=ht_sws.sws_id
+            
+         where 1=1
+        <if test="sws!=null &amp; sws!=''">
+            and ht_sws.sws_mc=#{sws}
+        </if>
+        <if test="zzbz!=null &amp; zzbz!=''">
+            and ht_ywy_bm.zzbz=#{zzbz}
+        </if>
+        <if test="dkxh!=null &amp; dkxh!=''">
+            and ht_ywy.id=#{dkxh}
+        </if>
+        <if test="xm!=null &amp; xm!=''">
+            and ywy_xm like (#{xm}+'%')
+        </if>
+
+    </select>
+
+    <insert id="addYwyByHtywyvo" useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtywyVo">      
+        insert into ht_ywy
+        (
+        sws_id,
+        ywy_id,
+        ywy_xm,
+        zzsz,
+        gsbz,
+        pyrq,
+        sfgcs
+        
+        )
+        values (
+        #{swsId},
+        #{dkxh},
+        #{xm},
+        #{zzbz},
+        #{gsbm},
+        CONVERT(DATETIME, #{qsrq}, 102),
+        #{gcs}
+        )
+    </insert>
+
+    <update id="updateYwyByHtywyvo"  useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtywyVo">
+        update  ht_ywy
+            set sws_id=#{swsId},
+             ywy_xm=#{xm},
+             zzsz= #{zzbz},
+             gsbz=#{gsbm},
+             pyrq=CONVERT(DATETIME, #{qsrq}, 102),
+             jzrq=CONVERT(DATETIME, #{jzrq}, 102),
+             sfgcs=#{gcs}
+        where ywy_id=#{dkxh}
+    </update>
+
+
+</mapper>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.broad.emc.module.dao.CustomerDao">
+
+    <select id="queryList" resultType="com.broad.emc.module.vo.CustomerVo">
+        select
+            cCusCode as khbm,
+            cCusName as khmc,
+            cCusAbbName as khjc,
+            cCCCode as khflbm,
+            dCusDevDate as fzrq,
+            cCusAddress as address,
+            cCusPostCode as yb,
+            cCusRegCode as nsrdjh,
+            cCusBank as khh,
+            cCusAccount as account,
+            cCusLPerson as fr,
+            cCusPerson as lxr,
+            cCusPhone as phone,
+            cCusFax as fax
+        from Customer
+        where 1=1
+        <if test="khflbm!=null &amp; khflbm!=''">
+           and cCCCode=#{khflbm}
+        </if>
+        <if test="khbm!=null &amp; khbm!=''">
+           and cCusCode=#{khbm}
+        </if>
+        <if test="khmc!=null &amp; khmc!=''">
+            and cCusName=#{khmc}
+        </if>
+        
+    </select>
+
+    
+</mapper>

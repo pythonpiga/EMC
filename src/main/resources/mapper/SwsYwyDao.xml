@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.broad.emc.module.dao.SwsDao">
+
+    <select id="selectYybm" resultType="com.broad.emc.module.entity.Sws">
+        select sws_id,sws_mc from ht_sws where sws_mc like '%服务部' or sws_mc='用中EMC部'           
+    </select>
+
+    <select id="selectSwsIdBySwsmc" resultType="com.broad.emc.module.entity.Sws">
+        select sws_id,sws_mc from ht_sws where sws_mc=#{swsmc}          
+    </select>
+
+    
+</mapper>

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.broad.emc.module.dao.YwyDao">
+
+    <!-- 通用查询映射结果 -->
+<!--    <resultMap id="BaseResultMap" type="com.broademc.entity.Ywy">-->
+<!--        <id column="ywy_id" property="ywyId"/>-->
+<!--        <result column="ywy_xm" property="ywyXm"/>-->
+<!--        <result column="price" property="price"/>-->
+<!--        <result column="description" property="description"/>-->
+<!--        <result column="create_time" property="createTime"/>-->
+<!--        <result column="update_time" property="updateTime"/>-->
+<!--    </resultMap>-->
+
+    <select id="selectYwyBySwsId" resultType="com.broad.emc.module.vo.YwyVo">
+        select 
+            ywy.ywy_xm,ywybm.sws_id,ywybm.ywy_id
+        from ht_ywy ywy inner join ht_ywy_bm ywybm on ywy.ywy_id=ywybm.ywy_id 
+        where ywybm.sws_id=#{id}
+    </select>
+
+    <select id="selectYwyIdByXm" resultType="string">
+        SELECT dkxh FROM ding_rs_jx where xm=#{xm}
+    </select>
+
+    
+
+</mapper>

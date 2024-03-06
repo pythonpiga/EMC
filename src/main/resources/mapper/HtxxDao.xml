@@ -1,0 +1,1165 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.broad.emc.module.dao.HtxxDao">
+    
+    <insert id="insertContract" useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtxxVo">
+        insert into ht_ht
+        (   ht_sno,
+            htbh,
+            htmc,
+            xmbh,
+            htgsbm,
+            sws_id,
+            ywy_id,
+            yyxmbh,
+            qdrq,
+            htlb,
+            saletype,
+            xmb_id,
+            qdbz,
+            tcjsdwdh,
+            
+            zgtcbz,     
+            hzbz,       
+            yxhtbz,     
+            httcbz,     
+            bsyjbz,     
+            eshtbz,     
+            znhbxm,    
+            tzhtbz,     
+            
+            zjfhdj,      
+            zjts,       
+            rysl,       
+            dtbj,      
+            sjf,		
+            ryje,       
+            ajf, 	    
+            tsf,		
+            fjje,	    
+            jjf,		
+            tcf,		
+            httcje, 	
+            
+            fydcpje,	
+            qtewfy,     
+            nfwxyf,	   
+            jhqje,	    
+            snjje,	    
+            gclr,	    
+            nyfwf,	    
+            htzje,	   
+            wbgcf,	    
+            fzjhte,	    
+            
+            khbh,       
+            yhfdwtr,	
+            htqdf,  	
+            khlb,   	
+            jzwlb,  	
+            yhyb,   	
+            yhkhh,  	
+            yhsh,   	
+            khdm,      
+            yhjc,       
+            qyxz,   	
+            xmlb,   	
+            yhlxdh,     
+            yhcz,  	    
+            yhhh,  	    
+            khmc,       
+            yhqc,       
+            qddd ,  	
+            yymsdh,  	
+            yhlxr,  	
+            yhzh,  	    
+            yhdz,   	
+            rwhtbz,  	
+            kjbz ,  	
+            xqhtbz,  	
+            sfnhzbht,
+            xmdx, 
+            jnfxhtbz,  	
+            
+            cdhpje, 	
+            wkbl, 		
+            ysfs, 		
+            dzfs, 		
+            ktmj, 		
+            htbz, 
+            jhsj,	
+            xmmc, 		
+            jjfs, 		
+            jzmj		
+            
+             
+        ) values 
+        (   (select max(ht_sno)+1 from ht_ht), 
+            #{htbh}, 
+            #{htmc}, 
+            #{sqxmbh},
+            #{htzt},
+            #{swsid},
+            #{qdry},
+            #{yyxmbh},
+            #{qdrq},
+            #{htlb},
+            #{xslb},
+            #{yybm},
+            #{qdbz},
+            #{jsdw},
+            
+            #{zgbt},
+            #{hzht},
+            #{hxxm},
+            #{khjlbt},
+            #{bjyj},
+            #{esht},
+            #{zlxm},
+            #{tzxm},
+            #{fhdj},
+            #{zjts},
+            #{ry},
+            #{zjbj},
+            #{sjf},
+            #{ryf},
+            #{azf},
+            #{tsf},
+            #{fjje},
+            #{jjf},
+            #{qttcf},
+            #{zjtce},
+            
+            #{fydcpe},
+            #{qtewfy},
+            #{fwxye},
+            #{jhj},
+            #{snj},
+            #{gclr},
+            #{nyfwf},
+            #{htzje},
+            #{wbgce},
+            #{fzjhte},
+            #{yykhbm},
+            #{fdwtr},
+            #{htqdf},
+            #{khlb},
+            #{jzlb},
+            #{yb},
+            #{yhkhh},
+            #{yhsh},
+            #{khdm},
+            #{yhjc},
+            #{qyxz},
+            #{xmlb},
+            #{phone},
+            #{yhcz},
+            #{yyhh},
+            #{khmc},
+            #{yhqc},
+            #{qddd},
+            #{yyms},
+            #{lxr},
+            #{yhzh},
+            #{address},
+            #{rwht},
+            #{cnkjbz},
+            #{xqht},
+            #{nhzb},
+            #{dxemcxm},
+            #{jnfx},
+            
+            #{cdje},
+            #{wkbl},
+            #{ysfs},
+            #{dzfs},
+            #{ktmj},
+            #{htbz},
+            CONVERT(DATETIME, #{jhsj}, 102),
+            #{xmjc},
+            #{jjfs},
+            #{jzmj}
+            
+        )
+    </insert>
+
+    
+    <insert id="insertDhmxDetail" useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtDhmxVo">      
+        insert into ht_cpgg
+        (
+            id,
+            cpdh,
+            ht_sno,
+            cpbh,
+            htlb,			
+            jd,
+            sl,
+            dj,
+            sjzk,
+            sjzkje,
+            je,  			 
+            bz,				
+            hl,
+            whje,
+            tcbl,
+            tcbz,			
+            bcqjlbz,	
+            bsyjbz,
+            fhsxm	,		
+            hxytbz,	
+            hxtsbz	
+        ) 
+        values
+        ( 
+            (select max(id)+1 from ht_cpgg  ),
+            (select max(cpdh)+1 from ht_cpgg  ),
+            #{htsno},
+            #{cpbh},
+            #{htlb},
+            #{jd},
+            #{sl},
+            #{dj},
+            #{sjzk},
+            #{sjzkje},
+            #{cjje},
+            #{bz},
+            #{hl},
+            #{whje},
+            #{tcbl},
+            #{tcbz},
+            #{cqjlbz},
+            #{bjyjbz},
+            #{fhxxm},
+            #{hxytbz},
+            #{tsbz}
+           
+            
+         )
+
+    </insert>
+
+    <insert id="insertDhmx" useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.HtDhmx">      
+        insert into ht_cpgg
+        (id,ht_sno,cpdh,htlb,cpbh,jd,sl,dj,je,hl,whje) 
+        values
+        ( (select max(id)+1 from ht_cpgg  ),#{htSno},#{cpdh},#{htlb},#{cpbh},#{jd},#{sl},#{dj},#{je},#{hl},#{whje} )
+
+    </insert>
+
+    <insert id="insertJzbh" useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.HtJzbh">      
+        insert into ht_jzxx
+        (htbh,ccbh,jzxh,lrr,lrsj) 
+        values
+        ( #{htbh},#{ccbh},#{jzxh},#{lrr},#{lrsj} )
+
+    </insert>
+    
+    <select id="queryContract"  resultType="com.broad.emc.module.vo.HtxxVo">
+        select
+        ht_sno as htsno,
+        DATEPART(yyyy,qdrq) as nd,
+        htbh,
+        (select  xm from ding_rs_jx where dkxh=(CAST(ywy_id AS VARCHAR))) as khjl ,
+        htmc,
+        qdrq,
+        htzje,
+        yhqc,
+        zjts,
+        case when fhbz=0 then '未发货'
+        when fhbz=1 then '已发货'
+        end as fhbz,
+        case when hzbz=0 then ''
+        when hzbz=1 then '合作'
+        end as hzbz ,
+        case when xqhtbz=0 then ''
+        when xqhtbz=1 then '续签'
+        end as xqhtbz ,
+        case when yyzt=0 then '未运营'
+        when yyzt=1 then '已运营'
+        end as yyzt,
+        case when htgsbm='x' then '用中节能推广部'
+        when htgsbm='2' then '能源公司运营'
+        else '近零公司'
+        end as htzt,
+        sws.sws_mc as swsmc,
+        (select sws_mc from ht_sws where sws_id=xmb_id) as yybm,
+        (select saletypemc from ht_saletype st where st.saletype=ht.saletype) as  xslb,
+        (select htlbmc from ht_htlb htlb where htlb.htlb=ht.htlb) as htlb,
+        tcjsdwdh,
+        case when ysfs='03' then '需方承担'
+        when ysfs='04' then '供方承担'
+        else '部门承担'
+        end as ysfs,
+        case when dzfs='03' then '需方承担'
+        when dzfs='04' then '供方承担'
+        else '部门承担'
+        end as dzfs,
+        jhsj,
+        jzmj,
+        ktmj,
+        yyqsrq,
+        (select yymsmc from ht_yyms where yymsdh=ht.yymsdh ) as yyms,      -- 运营模式
+        sfnhzbht,           --是否能耗总包合同
+        xmdx as dxemcxm     --大型EMC项目
+        from ht_sws sws inner join ht_ht ht on ht.sws_id =sws.sws_id
+        where   (flag is null or flag='')    -- flag=0 删除标识
+    
+        <!-- 事务所名称-->
+        <if test="swsmc!=null &amp; swsmc!=''">
+            and sws.sws_mc= #{swsmc}
+        </if>
+        <!-- 公司部门-->
+        <if test="gszgs!=null &amp; gszgs!=''">
+            and ht.htgsbm= #{gszgs}
+        </if>
+        <!-- 合同名称-->
+        <if test="htmc!=null &amp; htmc!=''">
+            and ht.htmc like (#{htmc}+'%')
+        </if>
+        <!-- 合同编号-->
+        <if test="htbh!=null &amp; htbh!=''">
+            and ht.htbh= #{htbh}
+        </if>
+        <!-- 大型emc标志-->
+        <if test="dxemcxm!=null &amp; dxemcxm!=''">
+            and ht.xmdx= #{dxemcxm}
+        </if>
+        <!-- 能耗总包标志-->
+        <if test="nhzb!=null &amp; nhzb!=''">
+            and ht.sfnhzbht= #{nhzb}
+        </if>
+        <!-- 合同序号-->
+        <if test="htsno!=null &amp; htsno!=''">
+            and ht.ht_sno= #{htsno}
+        </if>
+        
+        
+        order by ht.qdrq desc
+
+    </select>
+
+    <select id="queryContract1"  resultType="com.broad.emc.module.vo.HtxxVo">
+        select
+        * from ht_ht ht 
+        where   (flag is null or flag='')
+
+        <!-- 合同名称-->
+        <if test="htmc!=null &amp; htmc!=''">
+            and ht.htmc like (#{htmc}+'%')
+        </if>
+        <!-- 合同编号-->
+        <if test="htbh!=null &amp; htbh!=''">
+            and ht.htbh= #{htbh}
+        </if>
+        <!-- 大型emc标志-->
+        <if test="dxemcxm!=null &amp; dxemcxm!=''">
+            and ht.xmdx= #{dxemcxm}
+        </if>
+
+
+        order by ht.qdrq desc
+
+    </select>
+
+
+    <select id="queryDhmxByHtsno"  resultType="com.broad.emc.module.vo.HtDhmxVo">
+        select 
+            (select htlbmc from ht_htlb where htlb=cpgg.htlb) as htlb,
+            (select htfymc from ht_htfyl where htfylb=cpdm.htfylb) as cplx,
+            cpgg.cpdh	as cpdh,
+            cpgg.cpbh	as cpbh,
+            cpdm.cpmc as cpmc,
+            cpdm.cpgg as cpgg,
+            cpdm.dw as dw,
+            cpdm.bzbj as dtbj,
+            cpgg.jd	as jd,
+            cpgg.dj	as cjj,
+            cpgg.sl	as sl,
+            -- 	as nbzj, --计算
+            cpgg.sjzk	as sjzk,
+            cpgg.sjzkje  as sjzkje,
+            cpgg.je as cjje,
+            case when cpgg.bz=001 then '人民币'
+            when cpgg.bz=002 then '美元'
+            when cpgg.bz=003 then '欧元'
+            when cpgg.bz=004 then '港元'
+            when cpgg.bz=005 then '英镑'
+            when cpgg.bz=006 then '瑞士法郎'
+            when cpgg.bz=007 then '新加坡元'
+            when cpgg.bz=008 then '日元'
+            when cpgg.bz=009 then '泰国铢'
+            end as bz,
+            cpgg.hl as hl,
+            cpgg.whje as whje,
+            cpgg.tcbl as tcbl,
+            case when cpgg.tcbz=0 then '否'
+            when cpgg.tcbz=1 then '是'
+            end as tcbz,
+            case when cpgg.bcqjlbz=0 then '否'
+            when cpgg.bcqjlbz=1 then '是'
+            end as cqjlbz,
+            case when cpgg.bsyjbz=0 then '否'
+            when cpgg.bsyjbz=1 then '是'
+            end as bjyjbz,
+            case when cpdm.cpgs='X' then '用中节能推广部'
+            when cpdm.cpgs='2' then '能源公司运营'
+            end  as cpyjbm,
+            cpdm.cwnd	as nd,
+            case when cpdm.eszjf=0 then '否'
+            when cpdm.eszjf=1 then '是'
+            end as eszj,
+            case when cpgg.fhsxm=0 then '否'
+            when cpgg.fhsxm=1 then '是'
+            end as fhxxm,
+            case when cpgg.hxytbz=0 then '否'
+            when cpgg.hxytbz=1 then '是'
+            end as hxytbz,
+            case when cpgg.hxtsbz=0 then '否'
+            when cpgg.hxtsbz=1 then '是'
+            end as tsbz,
+            case when cpdm.fydcpbz=0 then '否'
+            when cpdm.fydcpbz=1 then '是'
+            end as fydcp,
+            (select nbzkbl from ht_htfyl where  htfylb=cpdm.htfylb ) as nbzkbl
+        from ht_cpgg cpgg inner join  ht_cpdm cpdm on cpgg.cpbh=cpdm.cpbh
+        where (flag is null or flag='')   -- 0 删除标志 
+            and  cpgg.ht_sno= #{htsno}
+
+
+    </select>
+    
+    <select id="queryFkgdByHtsno"  resultType="com.broad.emc.module.entity.HtFkgd">
+        select 
+            gd_no,
+            yynd,
+            fkrq,
+            case when bzdh=001 then '人民币'
+            when bzdh=002 then '美元'
+            when bzdh=003 then '欧元'
+            when bzdh=004 then '港元'
+            when bzdh=005 then '英镑'
+            when bzdh=006 then '瑞士法郎'
+            when bzdh=007 then '新加坡元'
+            when bzdh=008 then '日元'
+            when bzdh=009 then '泰国铢'
+            end as bzdh,
+            (select srmc from ht_srlb where srdh=fklb) as fklb,
+            fkje,
+            fkjg,
+            bz,
+            lrr,
+            lrsj
+        from ht_fkgdxm
+        where (flag is null or flag='')    -- flag=0 删除标识
+        and ht_sno=#{htsno}
+        order by gd_no asc 
+    </select>
+
+    <update id="updateContractByHtsno"  parameterType="com.broad.emc.module.vo.HtxxVo">
+        update ht_ht
+           set htbh=#{htbh},                 --  合同编号
+            htmc=#{ htmc },                  --  合同名称
+            xmmc=#{ xmjc },		             --  项目简称
+            htgsbm=#{htzt },                 --  合同主体
+            sws_id=#{sws },                  --  事务所
+            xmb_id=#{ yybm},                 --  运营部门
+            ywy_id = (select dkxh from ding_rs_jx where xm=#{khjl}),              --  客户经理
+            saletype=#{xslb },               --  销售类别
+            tcjsdwdh=#{ jsdw},               --  结算单位
+            htlb=#{htlb },                    --  合同类别
+            hzbz=#{khjlhz },		          --  合作标志 客户经理合作
+            znhbxm=#{ zlhbxm},		            --  战略伙伴协议项目
+            thxmbz=#{ sfwthxm},		            --  替换项目标志 0 1
+            
+            jhsj=CONVERT(DATETIME, #{jhsj }, 102),  --  交货时间
+            sbdhrq=CONVERT(DATETIME, #{sbdh }, 102),  -- 设备到货 
+            ysfs=#{ ysfs},                      --  运输方式
+            dzfs=#{ dzfs},                      --  吊装方式
+            httcbz=#{khjltc },			        --  合同提成标志 客户经理提成
+            xmdx=#{dxemcxm},                    --  大型EMC项目 02大型emc
+            xqhtbz=#{sfwxqht },                 --  续签合同标志
+
+            qdrq=CONVERT(DATETIME, #{qdrq }, 102), --  签订日期
+            yyqsrq=CONVERT(DATETIME, #{yysj }, 102), --  运营时间
+            jzmj=#{ jzmj},                      --  建筑面积
+            ktmj=#{ ktmj},                      --  空调面积
+            bjbl=#{bjbl },                      --  标价比例
+            htztbz=#{htztbz},     	            --  合同状态 0 未发货 1 已发货未调试 2 已发货已调试
+            yxhtbz=#{ sfwhxxm},                 --  后续项目标志
+
+            sktcfs=#{nftcfs },		            -- 能服提成方式  ('01'表示按收款年度提,'02'表示按收款时间段提)
+            zjtcfs=#{ cptcfs},                  -- 产品提成方式('01' 按销售额及合作比例)
+            htbffkbz=#{fkbz },	                --  合同部分付款标志('0'全款,'1'换房易物,'2'存款,'3'融资)
+            jjfs=#{ jjfs},		                -- 计价方式
+            yyzt=#{yyzt },		                --  运营状态
+            zgtcbz=#{zgtc },		            --  主管提成标志
+            rwhtbz=#{ rwht},		            --  入网合同标志
+            eshtbz=#{ sfesjxm},		            --  二手合同标志
+
+            yjftlb=#{yjjsfs },		            --  业绩计算方式 业绩分摊类别('01'表示按产品专营,'02'按归属部门合作比例)
+            htshsj=CONVERT(DATETIME, #{shrq }, 102),  --  合同审核时间
+            htshr=#{shr },		                  --  合同审核人
+            skywy=#{skr },		                 --  收款业务员
+            bsyjbz=#{ bjyj}, 		            --  不计业绩标志
+            jlsyjbz=#{jlsyj },		            --  计临时业绩标志
+            xdhtbz=#{xdht },		            --  信贷合同标志
+            zghzbz=#{zghz },		            --  主管合作标志
+            cxhtbz=#{ cxht},		            --  冲销合同标志
+
+            htbz=#{ bz},		                --  合同备注
+            htfhr=#{fhr},		                --  复核人
+            tzhtbz=#{ tzxm},		            --  投资项目标志
+            sgjtcbz=#{ sgjtc},		            --  手工计提成标志
+            zfbz=#{yzf },		                --  作废标志
+            sfnhzbht=#{nhzb },	                --  能耗总包标志
+            cqjlytbz=#{ cqjlyt},	            --  长期激励已提标志
+            wgnszt=#{wgyys }		            --  完工验收标志
+
+        where ht_sno =#{htsno}
+        
+    </update>
+
+    <select id="queryJeqkByHtsno"  resultType="com.broad.emc.module.vo.HtJeqkVo">
+        select 
+            zjts as zjts,					--主机台数
+            ryje as ry,						--溶液
+            zjbj as zjbzj,				--主机标准价
+            zjje ,								--主机金额
+            psyggce as yggce,			--预估工程额
+            zjnbzkje as zjnbzk,		--主机内部折扣
+            tsf,									--调试费
+            htgce,								--合同工程额
+            ajf as azf,									--安装费
+            sjf,									--设计费
+            wbgcf as wbgce,				--外包工程额
+            gclr,									--工程利润
+            jncj,									--节能差价
+            dzxff as dzf,					--吊装费
+            qtxff as qtf,					--其他费
+            httcje as djztc, 			--大机组提成
+            yfxff as zjyf,				--主机运费
+            tzyf,									--塔组运费
+            htzje,								--合同总金额
+            qtewfy as qtewf,			--其他额外费
+            zjhte	,								--主机合同额
+            tcf as qtcpe,  				--其他产品额
+            nyfwf,							--能源服务费
+            fzjhte,							--非主机合同额
+            qtnbzkje as qtnbzk ,		--其他内部折扣
+            nyfwftzje  as nftze,		--能服调整额
+            fydcpje as fydcp,				--非远大产品
+            fjje,										--辅机金额
+            -- sbtzje as sbfte,  			--设备分摊额
+            htbjbj  as htbzj, 			--合同标准价
+            qtbjbj as qtbzj,    		--其他标准价
+            jngzje as jngze,				--节能改造额
+            jgje ,									--技改金额
+            fwxye ,									--服务协议额
+            tcbl,										--提成比例
+            htbtje,									--合同不提金额
+            wkbl,										--尾款比例
+            zgtcbl as zgbl, 				--主管比例
+            zgtcjzrq,								--主管提成截止日期
+            case when wbbz=001 then '人民币'
+            when wbbz=002 then '美元'
+            when wbbz=003 then '欧元'
+            when wbbz=004 then '港元'
+            when wbbz=005 then '英镑'
+            when wbbz=006 then '瑞士法郎'
+            when wbbz=007 then '新加坡元'
+            when wbbz=008 then '日元'
+            when wbbz=009 then '泰国铢'
+            end as wbbz,										--外币币种
+            fphl, 									--发票汇率
+            htzje_wb as htwbze  		--合同外币总额
+        
+        from ht_ht
+        where ht_sno=#{htsno}
+    </select>
+    
+    <update id="updateJeqkByHtsno"  parameterType="com.broad.emc.module.vo.HtJeqkVo">
+        update ht_ht
+            set zjts =#{zjts},					--主机台数
+             ryje =#{ry} ,						--溶液
+             zjbj  =#{zjbzj},				--主机标准价
+             zjje =#{zjje}  ,								--主机金额
+             psyggce =#{yggce} ,			--预估工程额
+             zjnbzkje =#{zjnbzk} ,		--主机内部折扣
+             tsf =#{tsf} ,									--调试费
+             htgce =#{htgce} ,								--合同工程额
+             ajf =#{azf}  ,									--安装费
+             sjf =#{sjf} ,									--设计费
+             wbgcf =#{wbgce}  ,				--外包工程额
+             gclr =#{gclr} ,									--工程利润
+             jncj =#{jncj} ,									--节能差价
+             dzxff =#{dzf}  ,					--吊装费
+             qtxff =#{qtf}  ,					--其他费
+             httcje =#{djztc} , 			--大机组提成
+             yfxff =#{zjyf}  ,				--主机运费
+              tzyf =#{tzyf} ,									--塔组运费
+             htzje =#{htzje} ,								--合同总金额
+             qtewfy =#{qtewf}   ,			--其他额外费
+             zjhte =#{zjhte} 	,								--主机合同额
+             tcf =#{qtcpe}   ,  				--其他产品额
+             nyfwf =#{nyfwf} ,							--能源服务费
+             fzjhte =#{fzjhte} ,							--非主机合同额
+             qtnbzkje =#{qtnbzk}    ,		--其他内部折扣
+             nyfwftzje =#{nftze}    ,		--能服调整额
+             fydcpje =#{fydcp}   ,				--非远大产品
+             fjje =#{fjje} ,										--辅机金额
+             htbjbj =#{htbzj}    , 			--合同标准价
+             qtbjbj =#{qtbzj}   ,    		--其他标准价
+             jngzje =#{jngze}   ,				--节能改造额
+             jgje =#{jgje}  ,									--技改金额
+             fwxye =#{fwxye}  ,									--服务协议额
+             tcbl =#{tcbl} ,										--提成比例
+             htbtje =#{htbtje} ,									--合同不提金额
+             wkbl =#{wkbl} ,										--尾款比例
+             zgtcbl =#{zgbl}   , 				--主管比例
+             zgtcjzrq = CONVERT(DATETIME, #{zgtcjzrq}, 102) ,								--主管提成截止日期
+             wbbz=#{wbbz},                                   --外币币种
+             fphl =#{fphl} , 									--发票汇率
+             htzje_wb =#{htwbze}     		--合同外币总额
+        where ht_sno =#{htsno}
+
+    </update>
+
+    <update id="updateDhmxByCpbh"  parameterType="com.broad.emc.module.vo.HtDhmxVo">
+        update ht_cpgg
+            set htlb=#{htlb},
+            jd=#{jd} ,
+            dj=#{cjj} ,
+            sl=#{sl},
+            sjzk=#{sjzk} ,
+            sjzkje=#{sjzkje}  ,
+            je=#{cjje} ,
+            bz=#{bz},
+            hl=#{hl} ,
+            whje=#{whje} ,
+            tcbl=#{tcbl},
+            tcbz=#{tcbz},
+            bcqjlbz=#{cqjlbz} ,
+            bsyjbz=#{bjyjbz} ,
+            fhsxm=#{fhxxm} ,
+            hxytbz=#{hxytbz} ,
+            hxtsbz=#{tsbz}
+            
+        where cpbh =#{cpbh}
+
+    </update>
+
+    <insert id="addFkgdByHtsno" useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.HtFkgd">      
+        insert into ht_fkgdxm
+        (
+            id,
+            ht_sno,
+            gd_no,
+            yynd,
+            fkrq,
+            bzdh,
+            fklb,
+            fkje,
+            fkjg,
+            bz,
+            lrr,
+            lrsj
+        ) 
+        values
+        ( 
+            (select max(id)+1 from ht_fkgdxm ),
+            #{htSno},
+            #{gdNo},
+            #{yynd},
+            CONVERT(DATETIME, #{fkrq}, 102),
+            #{bzdh},
+            #{fklb},
+            #{fkje},
+            #{fkjg},
+            #{bz},
+            #{lrr},
+            CONVERT(DATETIME, #{lrsj}, 102)
+           
+         )
+
+    </insert>
+
+    <update id="updateFkgdByGdno"  parameterType="com.broad.emc.module.entity.HtFkgd">
+        update ht_fkgdxm
+            set yynd=#{yynd} ,
+            fkrq=#{fkrq} ,
+            bzdh=#{bzdh},
+            fklb=#{fklb} ,
+            fkje=#{fkje}  ,
+            fkjg=#{fkjg} ,
+            bz=#{bz}
+        where gd_no =#{gdNo}
+
+    </update>
+
+    <insert id="addJzxxByHtsno" useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.HtJzxx">      
+        insert into ht_jzxx
+        (
+            id,
+            fw_sno,
+            ccbh,
+            jzxh,
+            lrr,
+            lrsj
+        ) 
+        values
+        ( 
+            (select max(id)+1 from ht_jzxx ),
+            #{fwSno},
+            #{ccbh},
+            #{jzxh},
+            #{lrr},
+            CONVERT(DATETIME, #{lrsj}, 102)
+         )
+
+    </insert>
+
+    <update id="updateByHtsnoAndLrsj"  parameterType="com.broad.emc.module.entity.HtJzxx">
+        update ht_jzxx
+            set ccbh=#{ccbh} ,
+            jzxh=#{jzxh} 
+        where fw_sno =#{fwSno}
+        and lrsj=CONVERT(DATETIME, #{lrsj}, 102)
+
+    </update>
+
+    <select id="queryCbByHtsno"  resultType="com.broad.emc.module.entity.HtCb">
+        select 
+            nd as nd,
+            yf as yf,
+            (select cblbmc from ht_cblb where cblb=cb.cblb) as cblb,
+            fpsl as fpsl,
+            cbfsrq as cbfsrq,
+            cbfsjzrq as cbfsjzrq,
+            sl as sl,
+            dj as dj,
+            cbje as cbje,
+            sj as sj,
+            case when dkdjbz=0 then '否'
+            when dkdjbz=1 then '是'
+            end  as dkdjbz,
+            zy as zy,
+            pzlb as pzlb,
+            pzh as pzh,
+            pzrq as pzrq,
+            lrr as lrr,
+            lrsj as lrsj,
+            shr	as shr,
+            shsj as shsj
+        from ht_emccb cb
+        where ht_sno=#{htsno}
+    </select>
+    
+    <insert id="addCbByHtsno" useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.HtCb">      
+        insert into ht_emccb
+        (
+            id,
+            ht_sno,
+            nd,
+            yf,
+            cblb,
+            fpsl,
+            cbfsrq,
+            cbfsjzrq,
+            sl,
+            dj,
+            cbje,
+            sj,
+            dkdjbz,
+            zy,
+            pzlb,
+            pzh,
+            pzrq,
+            lrr,
+            lrsj
+        ) 
+        values
+        ( 
+            (select max(id)+1 from ht_emccb ),
+            #{htSno},
+            #{nd},
+            #{yf},
+            #{cblb},
+            #{fpsl},
+            CONVERT(DATETIME, #{cbfsrq}, 102),
+            CONVERT(DATETIME, #{cbfsjzrq}, 102),
+            #{sl},
+            #{dj},
+            #{cbje},
+            #{sj},
+            #{dkdjbz},
+            #{zy},
+            #{pzlb},
+            #{pzh},
+            CONVERT(DATETIME, #{pzrq}, 102),
+            #{lrr},
+            CONVERT(DATETIME, #{lrsj}, 102)
+         )
+
+    </insert>
+
+    <update id="updateCbByHtsno"  parameterType="com.broad.emc.module.entity.HtCb">
+        update ht_emccb
+            set nd=#{nd},
+                yf=#{yf},
+                cblb=#{cblb},
+                fpsl=#{fpsl},
+                cbfsrq=CONVERT(DATETIME, #{cbfsrq}, 102),
+                cbfsjzrq=CONVERT(DATETIME, #{cbfsjzrq}, 102),
+                sl=#{sl},
+                dj=#{dj},
+                cbje=#{cbje},
+                sj=#{sj},
+                dkdjbz=#{dkdjbz},
+                zy=#{zy},
+                pzlb=#{pzlb},
+                pzh=#{pzh},
+                pzrq=CONVERT(DATETIME, #{pzrq}, 102),
+                lrr=#{lrr},
+                lrsj=CONVERT(DATETIME, #{lrsj}, 102)
+            
+        where ht_sno =#{htSno}
+        and lrsj=CONVERT(DATETIME, #{lrsj}, 102)
+
+    </update>
+
+    <select id="queryFyByHtsno"  resultType="com.broad.emc.module.vo.HtFyVo">
+       select 
+            id,
+            nd,
+            yf,
+            htmc,
+            exp_gz as gz,
+            exp_flf as flf,
+            exp_gzc as gzc,
+            exp_wxyj as wxyj,
+            exp_zjf as zjf,
+            exp_fzf as fzf,
+            exp_jj as jj,
+            exp_bgf as bgf,
+            exp_clf as clf,
+            exp_zdf as zdf,
+            exp_ysf as ysf,
+            exp_ldbhf as ldbhf,
+            exp_jsfwf as jsfwf,
+            exp_xcf as xcf,
+            exp_hyf as hyf,
+            exp_dzyhp as dzyhp,
+            exp_jgf as jgf,
+            exp_ztbfwf as ztbfwf,
+            exp_lwf as lwf,
+            exp_wxf as wxf,
+            exp_ywtc as ywtc,
+            exp_lyf as lyf,
+            exp_other as qt,
+            lrr,
+            lrsj,
+            case when shbz=1 then '已审'
+            else '未审'
+            end as sh,
+            shr,
+            shsj
+        from ht_emccbfy
+        where ht_sno=#{htsno}
+    </select>
+
+    <insert id="addFyByHtsno" useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtFyVo">      
+        insert into ht_emccbfy
+        (
+            id,
+            ht_sno,
+            xmszlb,
+            nd,
+            yf,
+            htmc,
+            exp_gz,
+            exp_flf,
+            exp_gzc ,
+            exp_wxyj ,
+            exp_zjf ,
+            exp_fzf,
+            exp_jj ,
+            exp_bgf ,
+            exp_clf ,
+            exp_zdf ,
+            exp_ysf ,
+            exp_ldbhf ,
+            exp_jsfwf ,
+            exp_xcf ,
+            exp_hyf ,
+            exp_dzyhp ,
+            exp_jgf ,
+            exp_ztbfwf ,
+            exp_lwf ,
+            exp_wxf ,
+            exp_ywtc ,
+            exp_lyf ,
+            exp_other ,
+            lrr,
+            lrsj,
+            shbz,
+            shr,
+            shsj
+        ) 
+        values
+        ( 
+            (select max(id)+1 from ht_emccbfy ),
+            #{htsno},
+            #{xmszlb},          
+            #{nd},
+            #{yf},
+            #{htmc},
+            #{gz},
+            #{flf},
+            #{gzc},
+            #{wxyj},
+            #{zjf},
+            #{fzf},
+            #{jj},
+            #{bgf},
+            #{clf},
+            #{zdf},
+            #{ysf},
+            #{ldbhf},
+            #{jsfwf},
+            #{xcf},
+            #{hyf},
+            #{dzyhp},
+            #{jgf},
+            #{ztbfwf},
+            #{lwf},
+            #{wxf},
+            #{ywtc},
+            #{lyf},
+            #{qt},
+            #{lrr},
+            CONVERT(DATETIME, #{lrsj}, 102),
+            #{sh},
+            #{shr},
+            CONVERT(DATETIME, #{shsj}, 102)
+         )
+
+    </insert>
+
+    <update id="updateFyById"  parameterType="com.broad.emc.module.vo.HtFyVo">
+        update ht_emccbfy
+            set 
+            nd=#{nd},
+            yf=#{yf},
+            exp_gz=#{gz},
+            exp_flf=#{flf},
+            exp_gzc=#{gzc},
+            exp_wxyj=#{wxyj},
+            exp_zjf=#{zjf},
+            exp_fzf=#{fzf},
+            exp_jj =#{jj},
+            exp_bgf=#{bgf},
+            exp_clf=#{clf},
+            exp_zdf=#{zdf},
+            exp_ysf=#{ysf},
+            exp_ldbhf=#{ldbhf},
+            exp_jsfwf=#{jsfwf},
+            exp_xcf=#{xcf},
+            exp_hyf=#{hyf},
+            exp_dzyhp=#{dzyhp},
+            exp_jgf=#{jgf},
+            exp_ztbfwf=#{ztbfwf},
+            exp_lwf =#{lwf},
+            exp_wxf =#{wxf},
+            exp_ywtc =#{ywtc},
+            exp_lyf=#{lyf},
+            exp_other=#{qt},
+            lrr=#{lrr},
+            lrsj=CONVERT(DATETIME, #{lrsj}, 102),
+            shbz=#{sh},
+            shr=#{shr},
+            shsj=CONVERT(DATETIME, #{shsj}, 102)
+            
+        where id =#{id}
+
+    </update>
+
+    <select id="queryNfByHtsno"  resultType="com.broad.emc.module.entity.HtNf">
+       select 
+            fw_sno,
+            yynd,
+            sws_mc,
+            gcs_xm,
+            fwbh,
+            fwmc,
+            dqrq,
+            bjbj,
+            fwje,
+            qsrq,
+            jzrq,
+            fk10date,
+            lrr,
+            lrsj,
+            shr,
+            shsj
+        from ht_emcfwht
+        where ht_sno=#{htSno}
+        order by lrsj asc
+    </select>
+
+    <insert id="insertNf"  useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.HtNf">
+       insert into  ht_emcfwht
+       (
+            ht_sno,
+            fw_sno,
+            yynd,
+            gcs_xm,
+            fwbh,
+            fwmc,
+            dqrq,
+            bjbj,
+            fwje,
+            qsrq,
+            jzrq,
+            fk10date,
+            lrr,
+            lrsj
+        ) values (
+            #{htSno},
+            (select max(fw_sno)+1 from ht_emcfwht),
+            #{yynd},
+            #{gcsXm},
+            #{fwbh},
+            #{fwmc},
+            CONVERT(DATETIME, #{dqrq}, 102),
+            #{bjbj},
+            #{fwje},
+            CONVERT(DATETIME, #{qsrq}, 102),
+            CONVERT(DATETIME, #{jzrq}, 102),
+            CONVERT(DATETIME, #{fk10date}, 102),
+            #{lrr},
+            CONVERT(DATETIME, #{lrsj}, 120)
+           
+        )
+    </insert>
+
+    <update id="updateNfByFwsno"  parameterType="com.broad.emc.module.entity.HtNf">
+        update ht_emcfwht
+            set 
+            yynd=#{yynd},
+            gcs_xm=#{gcsXm},
+            fwbh=#{fwbh},
+            fwmc=#{fwmc},
+            dqrq=CONVERT(DATETIME, #{dqrq}, 102),
+            bjbj=#{bjbj},
+            fwje=#{fwje},
+            qsrq=CONVERT(DATETIME, #{qsrq}, 102),
+            jzrq=CONVERT(DATETIME, #{jzrq}, 102),
+            fk10date=CONVERT(DATETIME, #{fk10date}, 102)
+        where fw_sno=#{fwSno}
+            
+    </update>
+
+    <select id="queryHtskByHtsno"  resultType="com.broad.emc.module.vo.HtSkVo">
+        select 
+            htbh as htbh,
+            id as skxh,
+            pay_no as skdh,
+            (select srmc from ht_srlb where srdh=srlb ) as srlb,
+            yynd  as nd,
+            dkrq  as dkrq,
+            dkje  as dkje,
+            case when dkdjbz=0 then '否' 
+            when dkdjbz=1 then '是' 
+            end as dkdjbz, 
+            bhje  as bhje,
+            memo as beizhu,
+            ccuscode  as yykhbm,
+            ccusname  as yhkhmc,
+            fklrr as lrr,
+            fklrsj  as lrsj,
+            (select  xm from ding_rs_jx where dkxh= zgdh)  as zg,
+            (select  xm from ding_rs_jx where dkxh= ywy_id) as khjl,
+            zgjdtc as  zgtc,
+            hxqtewfje as hxqtewf
+        from ht_fkb
+        where ht_sno= #{htsno}
+        <if test="time!=null &amp; time!=''">
+            and  CONVERT(varchar(7), dkrq, 120)=#{time}
+        </if>
+    </select>
+
+    <insert id="insertHtSk"  useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtSkVo">
+       insert into  ht_fkb
+       (
+            id,
+            ht_sno,
+            pay_no,
+            srlb,
+            yynd,
+            dkrq,
+            dkje,
+            dkdjbz, 
+            bhje ,
+            memo,
+            ccuscode  ,
+            ccusname ,
+            fklrr ,
+            fklrsj ,
+            zgdh,
+            ywy_id,
+            zgjdtc,
+            hxqtewfje ,
+            cbankaccount
+        ) values (
+            (select max(id)+1 from ht_fkb),
+            #{htsno},
+            #{skdh},
+            #{srlb},
+            #{nd},
+            CONVERT(DATETIME, #{dkrq}, 102),
+            #{dkje},
+            #{dkdjbz},
+            #{bhje},
+            #{beizhu},
+            #{yykhbm},
+            #{yhkhmc},
+            #{lrr},
+            CONVERT(DATETIME, #{lrsj}, 102),
+            (select  dkxh from  ding_rs_jx where xm=#{zg} ),
+            (select  dkxh from  ding_rs_jx where xm=#{khjl} ),
+            #{zgtc},
+            #{hxqtewf},
+            #{bankaccount}
+           
+        )
+    </insert>
+
+    <update id="updateHtSkById"  parameterType="com.broad.emc.module.vo.HtSkVo">
+       update   ht_fkb
+            set 
+            pay_no= #{skdh},
+            srlb=#{srlb},
+            yynd= #{nd},
+            dkrq=CONVERT(DATETIME, #{dkrq}, 102),
+            dkje=#{dkje},
+            dkdjbz=#{dkdjbz},
+            bhje= #{bhje},
+            memo=#{beizhu},
+            ccuscode= #{yykhbm},
+            ccusname=#{yhkhmc},
+            zgdh=(select   dkxh from  ding_rs_jx where xm=#{zg} ),
+            ywy_id=(select  dkxh from  ding_rs_jx where xm=#{khjl} ),
+            zgjdtc=#{zgtc},
+            hxqtewfje =#{hxqtewf}
+        where id=#{skxh}
+            
+    </update>
+
+
+ 
+
+
+
+
+</mapper>

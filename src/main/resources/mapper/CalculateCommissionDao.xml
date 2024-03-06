@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.broad.emc.module.dao.CalculateCommissionDao">
+
+    <select id="selectExcelData" resultType="com.broad.emc.module.entity.HtExcelData">
+        select  *  from ht_exceldata 
+        where year=DATEPART(year, GETDATE())
+        and ht_sno=#{htsno}
+        and jd=#{jd}
+        
+    </select>
+
+    <select id="getDataByHtsno" resultType="com.broad.emc.module.entity.HtExcelData">
+        select  *  from ht_exceldata 
+        where 
+        ht_sno=#{htsno}
+        and year=#{year}
+        
+    </select>
+
+    <insert id="addHtEecelData" useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.HtExcelData">      
+       insert into ht_exceldata 
+       (    ht_sno,
+            htmc,
+            year,
+            qdrq,
+            yyrq,
+            sbft,
+            dj,
+            nf,
+            zscp,
+            dj_2021,
+            zscp_2021,
+            nf_2021,
+            yyksqbz,
+            sdqdke
+            )
+       VALUES ( 
+            #{htSno},
+            #{htmc},
+            #{year},
+            CONVERT(DATETIME, #{qdrq}, 102),
+            CONVERT(DATETIME, #{yyrq}, 102),
+            #{sbft},
+            #{dj},
+            #{nf},
+            #{zscp},
+            #{dj2021},
+            #{zscp2021},
+            #{nf2021},
+            #{yyksqbz},
+            #{sdqdke}
+        )
+    </insert>
+
+    <update id="updateHtEecelData"  parameterType="com.broad.emc.module.entity.HtExcelData">
+        update ht_exceldata
+            set 
+                ht_sno=#{htSno},
+                htmc=#{htmc},
+                year=#{year},
+                qdrq=CONVERT(DATETIME, #{qdrq}, 102),
+                yyrq=CONVERT(DATETIME, #{yyrq}, 102),
+                sbft=#{sbft},
+                dj=#{dj},
+                nf=#{nf},
+                zscp=#{zscp},
+                dj_2021=#{dj2021},
+                zscp_2021=#{zscp2021},
+                nf_2021=#{nf2021},
+                yyksqbz=#{yyksqbz},
+                sdqdke=#{sdqdke}
+       
+        where ht_sno =#{htSno} and year= #{year}
+         
+    </update>
+
+    <update id="updateWdbnfByHtsno"  parameterType="com.broad.emc.module.entity.HtExcelData">
+        update ht_exceldata
+            set 
+                wdbnf=case when (wdbnf='' or wdbnf is null) then #{wdbnf} else wdbnf+','+#{wdbnf} end
+        where ht_sno =#{htSno}
+         
+    </update>
+    
+    <insert id="addTcjg" useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.HtTcjg">      
+       insert into ht_tcjg
+       ( 
+        ht_sno,
+        year,
+        jd,
+        sr,
+        cb,
+        sbft,
+        fy,
+        nf,
+        dk,
+        dj,
+        zscp,
+        sdq,
+        jlrl,
+        tcry,
+        tcbl,
+        tcje,
+        rylx,
+        tcje5s,
+        wdbnf,
+        time
+         ) 
+       VALUES ( 
+            #{htSno},
+            #{year},
+            #{jd},
+            #{sr},
+            #{cb},
+            #{sbft},
+            #{fy},
+            #{nf},
+            #{dk},
+            #{dj},
+            #{zscp},
+            null,               --水电气抵扣额
+            #{jlrl},
+            #{tcry},
+            #{tcbl},
+            #{tcje},
+            #{rylx},
+            #{tcje5s},
+            #{wdbnf},
+            #{time}
+        )
+    </insert>
+
+    <select id="selectTcjg" resultType="com.broad.emc.module.entity.HtTcjg">
+        select  *  from ht_tcjg 
+        where ht_sno=#{htSno}
+        <if test="year!=null &amp; year!=''">
+            and year=#{year}
+        </if>
+        <if test="jd!=null &amp; jd!=''">
+            and jd=#{jd}
+        </if>
+        <if test="tcry!=null &amp; tcry!=''">
+            and tcry=#{tcry}
+        </if>
+        
+        
+    </select>
+
+    <select id="queryTcjgList" resultType="com.broad.emc.module.entity.HtTcjg">
+        select  *  from ht_tcjg
+        where ht_sno=#{htSno}
+        <if test="year!=null &amp; year!=''">
+            and year=#{year}
+        </if>
+        <if test="jd!=null &amp; jd!=''">
+            and jd=#{jd}
+        </if>
+        <if test="tcry!=null &amp; tcry!=''">
+            and tcry=#{tcry}
+        </if>
+
+
+    </select>
+
+    <update id="updateTcjgInfo"  parameterType="com.broad.emc.module.entity.HtTcjg">
+        update ht_tcjg
+        <trim prefix="set" suffixOverrides=",">
+            <if test="htSno != null and htSno != '' " >
+                ht_sno=#{htSno},
+            </if>
+            <if test="year != null and year != '' " >
+                year=#{year},
+            </if>
+            <if test="jd != null and jd != '' " >
+                jd=#{jd},
+            </if>
+            <if test="sr != null and sr != '' " >
+                sr=#{sr},
+            </if>
+            <if test="cb != null and cb != '' " >
+                cb=#{cb},
+            </if>
+            <if test="sbft != null and sbft != '' " >
+                sbft=#{sbft},
+            </if>
+            <if test="fy != null and fy != '' " >
+                fy=#{fy},
+            </if>
+            <if test="nf != null and nf != '' " >
+                nf=#{nf},
+            </if>
+            <if test="dk != null and dk != '' " >
+                dk=#{dk},
+            </if>
+            <if test="dj != null and dj != '' " >
+                dj=#{dj},
+            </if>
+            <if test="zscp != null and zscp != '' " >
+                zscp=#{zscp},
+            </if>
+            <if test="jlrl != null and jlrl != '' " >
+                jlrl=#{jlrl},
+            </if>
+            <if test="tcry != null and tcry != '' " >
+                tcry=#{tcry},
+            </if>
+            <if test="tcbl != null and tcbl != '' " >
+                tcbl=#{tcbl},
+            </if>
+            <if test="tcje != null and tcje != '' " >
+                tcje=#{tcje},
+            </if>
+            <if test="rylx != null and rylx != '' " >
+                rylx=#{rylx},
+            </if>
+            <if test="tcje5s != null and tcje5s != '' " >
+                tcje5s=#{tcje5s},
+            </if>
+            <if test="time != null and time != '' " >
+                time=#{time},
+            </if>
+                wdbnf=#{wdbnf}
+            
+        </trim>
+               
+        where ht_sno =#{htSno}
+        <if test="year != null and year != '' " >
+            and year=#{year}
+        </if>
+        <if test="jd != null and jd != '' " >
+            and jd=#{jd}
+        </if>
+        <if test="tcry != null and tcry != '' " >
+            and tcry=#{tcry}
+        </if>
+
+    </update>
+
+
+    <select id="getWdbnfByHtsnoAndTime" resultType="java.lang.String">
+        SELECT DISTINCT wdbnf FROM ht_tcjg
+        where ht_sno=#{htsno}
+        and CONVERT(DATETIME,time,102) &lt;= #{time}         
+        
+    </select>
+    
+    
+
+
+</mapper>

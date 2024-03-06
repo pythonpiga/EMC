@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.broad.emc.module.dao.HtywyDao">
+
+    <select id="selectInfoList" resultType="com.broad.emc.module.vo.HtywyVo">
+        select
+            (select sws_mc from ht_sws where sws_id=ht.sws_id) as sws,
+            (select top 1 xm from rs_kq_spr where dkxh=ywy_id) as khjl,
+            case when hzrylb=01 then '签单客户经理'
+            else '主管'
+            end as rylb,
+            htbl,
+            tcbl
+        from ht_htywy ht
+        where ht_sno=#{htsno}
+
+    </select>
+
+    <insert id="insertTcry" useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtywyVo">      
+       insert into ht_htywy(
+            id,
+            ht_sno,
+            sws_id,
+            ywy_id,
+            hzrylb,
+            htbl,
+            tcbl
+        ) values (
+            case  
+                when (select ISNULL((select max(id) from ht_htywy), '')) ='0' then '1'
+                else (select max(id)+1 from ht_htywy)
+            end ,
+            #{htsno},
+            #{sws},
+            (select dkxh  from ding_rs_jx where xm=#{khjl} ),
+            #{rylb},
+            #{htbl},
+            #{tcbl}
+        )
+
+    </insert>
+
+    <update id="updateTcryByHtsno"  useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtywyVo">
+        UPDATE ht_htywy 
+            SET sws_id =#{sws},
+            ywy_id =(select dkxh  from ding_rs_jx where xm=#{khjl} ),
+            hzrylb =#{rylb},
+            htbl =#{htbl},
+            tcbl =#{tcbl}
+        WHERE
+            ht_sno =#{htsno} and ywy_id=(select  dkxh  from ding_rs_jx where xm=#{khjl} )
+        
+    </update>
+
+
+</mapper>
