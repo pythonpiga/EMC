@@ -1,8 +1,10 @@
 package com.broad.emc.module.service;
 
 
+import com.broad.emc.module.entity.HtLog;
+
 /**
- * ${comments}
+ * 操作日志
  *
  * @author tkh
  * @email 1743962435@qq.com
@@ -10,6 +12,6 @@ package com.broad.emc.module.service;
  */
 public interface LogService {
 
-    //int insertLog(HtLog log);
+    int insertLog(HtLog log);
 }
 

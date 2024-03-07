@@ -10,7 +10,7 @@ import org.apache.ibatis.annotations.Insert;
  */
 public interface HtLogDao extends BaseMapper<HtLog> {
 
-//   @Insert("insert intp ht_log values( #{log.userName},#{log.operateContent},#{log.method},#{log.controller}," +
-//           "#{log.operateTime},#{log.parameters},#{log.returnValue} ) ")
-//    int addLogRecord(HtLog log);
+   @Insert("insert into ht_log values( #{userName},#{operateContent},#{method},#{controller}," +
+           "#{operateTime},#{parameters},#{returnValue} ) ")
+    int addLogRecord(HtLog log);
 }

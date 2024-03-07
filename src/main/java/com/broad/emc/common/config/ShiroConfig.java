@@ -58,10 +58,8 @@ public class ShiroConfig {
         filterMap.put("/logout", "logout");         // logout会清除session 退出登录
         filterMap.put("/emc/admin/login", "anon");  //登录页面 放行
         filterMap.put("/emc/**", "authc");          // **代表所有路径 除以上路径外的管理员页面都拦截
-
-       
-
-        //设置登录页 默认login.jsp
+        
+        //设置登录页 默认login.jsp 前后端分离返回json等数据
         bean.setLoginUrl("/emc/admin/toLogin");
         bean.setFilterChainDefinitionMap(filterMap);
         // 未授权页面

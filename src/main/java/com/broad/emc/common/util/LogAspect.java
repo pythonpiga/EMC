@@ -77,7 +77,7 @@ public class LogAspect {
         log.setController(targetName);
         log.setOperateTime(new Date());
         log.setUserName(userName);
-        //logService.insertLog(log);
+        logService.insertLog(log);
     }
 
 

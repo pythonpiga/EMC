@@ -169,8 +169,11 @@ public class AdminController {
 
     //无认证 跳转登录
     @RequestMapping("/toLogin")
-    public String Unauthorized(){
-        return "toLogin";
+    public ReturnData Unauthorized(){
+        ReturnData ret=ReturnData.getSuccessData();
+        ret.setCode("401");
+        ret.setMsg("身份认证失败，请先登录");
+        return ret;
     }
 
    

@@ -332,7 +332,7 @@ public class CommissionController {
      */
     @RequestMapping("/EmcCommission")
     @RequiresRoles("admin")
-    @MyArchivesLog(operteContent="计算提成")
+    @MyArchivesLog(operteContent="大型EMC计算提成")
     public ReturnData EmcCommission(@RequestParam String year, @RequestParam String jd) {
         ReturnData ret = ReturnData.getSuccessData();
         List<HtxxVo> list=new ArrayList<>();
@@ -635,6 +635,8 @@ public class CommissionController {
      * @return
      */
     @RequestMapping("/DkCommission")
+    @RequiresRoles("admin")
+    @MyArchivesLog(operteContent="到款计算提成")
     public ReturnData DkCommission(@RequestParam String year, @RequestParam String lx, @RequestParam String jd) {
         ReturnData ret = ReturnData.getSuccessData();
         List<HtxxVo> list=new ArrayList<>();

@@ -1,4 +1,4 @@
-package com.broad.emc.common;//package com.broad.emc.common;
+package com.broad.emc.common.exception;
 
 import com.broad.emc.module.vo.ReturnData;
 import org.apache.shiro.authz.AuthorizationException;
@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
  * 自定义权限异常类
+ * 异常处理
  */
 @ControllerAdvice
 public class PermisiionException {
