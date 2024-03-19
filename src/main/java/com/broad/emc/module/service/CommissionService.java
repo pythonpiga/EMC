@@ -1,6 +1,7 @@
 package com.broad.emc.module.service;
 
 
+import com.broad.emc.module.entity.HtDb;
 import com.broad.emc.module.entity.HtExcelData;
 import com.broad.emc.module.entity.HtTcjg;
 import com.broad.emc.module.vo.HtywyVo;
@@ -76,6 +77,34 @@ public interface CommissionService {
      * 提成奖励计算结果保存到数据库
      */
     int saveTcjg(HtTcjg htTcjg);
+
+    /**
+     * 记录合同历年净利润率达标信息
+     * @param htDb
+     * @return
+     */
+    int saveDbInfo(HtDb htDb);
+    
+    /**
+     * 修改合同历年净利润率达标信息
+     * @param htDb
+     * @return
+     */
+    int updateDbInfo(HtDb htDb);
+
+    /**
+     * 查询合同历年净利润率达标信息
+     * @param 
+     * @return
+     */
+    HtDb getDbInfo(String htSno,String year);
+
+    /**
+     * 查询合同历年净利润率未达标年份集合
+     * @param
+     * @return
+     */
+    List<HtDb> getUnDbList(String htSno);
 
     /**
      * 查询提成信息

@@ -31,11 +31,11 @@ public class HtExcelData implements Serializable {
 	/**
 	 * $column.comments
 	 */
-	private Date qdrq;
+	private String qdrq;
 	/**
 	 * $column.comments
 	 */
-	private Date yyrq;
+	private String yyrq;
 	/**
 	 * 设备分摊(月)
 	 */

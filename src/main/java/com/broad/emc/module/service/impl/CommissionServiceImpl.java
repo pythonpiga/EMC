@@ -2,6 +2,7 @@ package com.broad.emc.module.service.impl;
 
 import com.broad.emc.module.dao.CalculateCommissionDao;
 import com.broad.emc.module.dao.HtywyDao;
+import com.broad.emc.module.entity.HtDb;
 import com.broad.emc.module.entity.HtExcelData;
 import com.broad.emc.module.entity.HtTcjg;
 import com.broad.emc.module.service.CommissionService;
@@ -59,6 +60,22 @@ public class CommissionServiceImpl implements CommissionService {
 
     public int saveTcjg(HtTcjg htTcjg){
         return calculateCommission.addTcjg(htTcjg);
+    }
+
+    public int saveDbInfo(HtDb htDb){
+        return calculateCommission.addDbInfo(htDb);
+    }
+
+    public HtDb getDbInfo(String htSno,String year){
+        return calculateCommission.queryDbInfo(htSno,year);
+    }
+
+    public List<HtDb> getUnDbList(String htSno){
+        return calculateCommission.queryUnDbList(htSno);
+    }
+
+    public int updateDbInfo(HtDb htDb){
+        return calculateCommission.updateDbInfoByHtsnoAndYear(htDb);
     }
 
     public HtTcjg getTcjgInfo(HtTcjg htTcjg){
