@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.broad.emc.module.entity.HtDb;
 import com.broad.emc.module.entity.HtExcelData;
 import com.broad.emc.module.entity.HtTcjg;
+import com.broad.emc.module.vo.CommonVo;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -23,7 +24,9 @@ public interface CalculateCommissionDao extends BaseMapper<HtExcelData> {
     int updateWdbnfByHtsno(HtExcelData htExcelData);
 
     int addTcjg( HtTcjg htTcjg);
-    
+
+    int updateTcjgInfo( HtTcjg htTcjg);
+
     @Insert(" insert into ht_db values ( #{htSno},#{htName},#{year},#{jlrl},#{db}  ) ")
     int addDbInfo(HtDb htDb);
     
@@ -40,7 +43,7 @@ public interface CalculateCommissionDao extends BaseMapper<HtExcelData> {
 
     List<HtTcjg> queryTcjgList(HtTcjg htTcjg);
 
-    int updateTcjgInfo( HtTcjg htTcjg);
+    List<HtTcjg> selectTcjgList(HtTcjg htTcjg);
     
     List getWdbnfByHtsnoAndTime(String htsno,String time);
 

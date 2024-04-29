@@ -46,6 +46,10 @@ public class ContractManageServiceImpl implements ContractManageService {
     public List<HtSkVo> getHtskList(String htsno,String time) {
         return htxxDao.queryHtskByHtsno(htsno,time);
     }
+
+    public int addSkCfData(U8Info u8Info) {
+        return htxxDao.insertSkCf(u8Info);
+    }
     
     public int addHtSk(HtSkVo htSkVo) {
         return htxxDao.insertHtSk(htSkVo);
@@ -174,7 +178,12 @@ public class ContractManageServiceImpl implements ContractManageService {
     public int delNf(HtNf htNf) {
         return htxxDao.deleteNfByFwsno(htNf);
     }
+    
+    public List<Htxx> getHtmcList(){
+        return htxxDao.selectHtmcList();
+    }
 
- 
+
+
 
 }

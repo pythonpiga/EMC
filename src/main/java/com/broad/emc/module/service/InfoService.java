@@ -114,4 +114,11 @@ public interface InfoService {
      */
     Rsjx findUser(String account);
 
+    /**
+     * 根据账号（打卡序号）查找用户权限信息
+     * @param account
+     * @return
+     */
+    String findUserAuth(String account);
+
 }

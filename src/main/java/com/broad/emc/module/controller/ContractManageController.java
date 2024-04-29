@@ -2,11 +2,14 @@ package com.broad.emc.module.controller;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.broad.emc.module.entity.*;
 import com.broad.emc.module.entity.HtFkgd;
+import com.broad.emc.module.service.AdminService;
 import com.broad.emc.module.vo.ReturnData;
 import com.broad.emc.module.service.ContractManageService;
 import com.broad.emc.module.vo.*;
+import com.github.pagehelper.PageInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresRoles;
@@ -34,6 +37,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ContractManageController  {
     @Autowired
     private ContractManageService contractManageService;
+    
 
     /**
      *  合同基本信息录入
@@ -143,7 +147,7 @@ public class ContractManageController  {
             List<HtxxVo> htVoList=contractManageService.getContractList(htxxVo);
             ret.setData(htVoList);
             ret.setMsg("查询成功");
-            
+
         } catch (Exception e) {
             log.error("查询合同信息失败，异常：{}", e);
             return ReturnData.getExceptionData("查询合同信息失败，异常");
@@ -151,6 +155,11 @@ public class ContractManageController  {
 
         return ret;
     };
+
+
+
+
+
 
     /**
      *  根据合同编号获取合同基本信息
@@ -978,6 +987,32 @@ public class ContractManageController  {
 
         return ret;
     };
+
+
+    /**
+     *  收款数据拆分-保存拆分数据
+     * @param u8Info
+     * @return
+     */
+    @RequestMapping("/addSkSplitData")
+    public ReturnData addSkSplitData(@RequestBody U8Info u8Info){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (u8Info == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try {
+            int res=contractManageService.addSkCfData(u8Info);
+            if(res>0){
+                ret.setMsg("收款数据拆分成功");
+            }
+        } catch (Exception e) {
+            log.error("收款数据拆分失败，异常：{}", e);
+            return ReturnData.getExceptionData("收款数据拆分失败，异常");
+        }
+
+        return ret;
+    };
+    
 
     /**
      * 新增合同收款

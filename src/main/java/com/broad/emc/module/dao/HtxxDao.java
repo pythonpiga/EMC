@@ -37,7 +37,9 @@ public interface HtxxDao extends BaseMapper<Htxx> {
     Htxx queryContractByHtbh(String htbh);
 
     List<HtSkVo> queryHtskByHtsno(String htsno, String time);
-    
+
+    int insertSkCf(U8Info u8Info);
+
     int insertHtSk(HtSkVo htSkVo);
     
     int updateHtSkById(HtSkVo htSkVo);
@@ -109,6 +111,10 @@ public interface HtxxDao extends BaseMapper<Htxx> {
     
     @Delete(" delete from ht_emcfwht where fw_sno=#{fwSno} ")
     int deleteNfByFwsno(HtNf htNf);
+
+    @Select(" select DISTINCT htmc,yyxmbh from ht_ht ")
+    List<Htxx> selectHtmcList();
+
 
 
 

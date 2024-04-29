@@ -20,7 +20,7 @@
     </select>
 
     <select id="selectYwyIdByXm" resultType="string">
-        SELECT dkxh FROM ding_rs_jx where xm=#{xm}
+        SELECT dkxh FROM rs_jx where xm=#{xm}
     </select>
 
     

@@ -269,6 +269,13 @@ public interface ContractManageService  {
     List<HtSkVo> getHtskList(String htsno, String time);
 
     /**
+     * 收款数据拆分记录保存
+     * @param u8Info
+     * @return
+     */
+    int addSkCfData(U8Info u8Info);
+
+    /**
      * 新增合同收款
      * @param htSkVo
      * @return
@@ -296,6 +303,8 @@ public interface ContractManageService  {
      * @return
      */
     int deleteContract(String htsno);
+    
+    List<Htxx> getHtmcList();
 
   
     

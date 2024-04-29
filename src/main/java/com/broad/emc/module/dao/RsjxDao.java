@@ -14,7 +14,10 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface RsjxDao extends BaseMapper<Rsjx> {
 
-    @Select( "  select * from ding_rs_jx where dkxh=#{account}  " )
+    @Select( "  select * from rs_jx where dkxh=#{account}  " )
     Rsjx selectOneByDKXH(String account);
+
+    @Select( "  select type FROM ding_emc_admin where account=#{account}  " )
+    String selectUserAuthByDKXH(String account);
 
 }

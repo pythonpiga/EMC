@@ -5,225 +5,510 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
-    import java.io.Serializable;
+import java.math.BigDecimal;
+import java.io.Serializable;
 import java.util.Date;
 
 /**
- * 员工信息表
+ * 人事
  *
  * @author tkh
  * @email 1743962435@qq.com
- * @date 2023-12-26 14:52:42
+ * @date 2024-04-24 11:22:34
  */
 @Data
-@TableName("ding_rs_jx")
+@TableName("rs_jx")
 public class Rsjx implements Serializable {
-    private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-            /**
+        /**
          * $column.comments
          */
-                @TableId(type = IdType.AUTO)
-            private String dingUserid;
-            /**
+        @TableId(type = IdType.AUTO)
+        private String id;
+        /**
          * $column.comments
          */
-            private String bmmc;
-            /**
+        private String xm;
+        /**
          * $column.comments
          */
-            private String zwmc;
-            /**
+        private String xb;
+        /**
          * $column.comments
          */
-            private String xm;
-            /**
+        private String bm;
+        /**
          * $column.comments
          */
-            private String dkxh;
-            /**
+        private String gz;
+        /**
          * $column.comments
          */
-            private String sfzg;
-            /**
+        private String zw;
+        /**
          * $column.comments
          */
-            private String vcMobile;
-            /**
+        private Date pyrq;
+        /**
          * $column.comments
          */
-            private String eMail;
-            /**
+        private String jb;
+        /**
          * $column.comments
          */
-            private String vcTelOffice;
-            /**
+        private String zy;
+        /**
          * $column.comments
          */
-            private String vcMobileSpare;
-            /**
+        private String xl;
+        /**
          * $column.comments
          */
-            private String bmid;
-            /**
+        private Float pjcs;
+        /**
          * $column.comments
          */
-            private String strId;
-            /**
+        private String dkxh;
+        /**
          * $column.comments
          */
-            private String strUpid;
-            /**
+        private Date bdrq;
+        /**
          * $column.comments
          */
-            private String deptName;
-            /**
+        private String bdyy;
+        /**
          * $column.comments
          */
-            private Long deptDing;
-            /**
+        private Float sdf;
+        /**
          * $column.comments
          */
-            private String upAct;
-            /**
+        private String sfzhm;
+        /**
          * $column.comments
          */
-            private String userid;
-            /**
+        private Float dkbz;
+        /**
          * $column.comments
          */
-            private String unionid;
-            /**
+        private Date sr;
+        /**
          * $column.comments
          */
-            private String name;
-            /**
+        private String bz;
+        /**
          * $column.comments
          */
-            private String avatar;
-            /**
+        private Float htnx;
+        /**
          * $column.comments
          */
-            private String stateCode;
-            /**
+        private String htbz;
+        /**
          * $column.comments
          */
-            private String managerUserid;
-            /**
+        private String zh1;
+        /**
          * $column.comments
          */
-            private String mobile;
-            /**
+        private String hzhm;
+        /**
          * $column.comments
          */
-            private Boolean hideMobile;
-            /**
+        private Float zcbz;
+        /**
          * $column.comments
          */
-            private String telephone;
-            /**
+        private Date zfjj;
+        /**
          * $column.comments
          */
-            private String jobNumber;
-            /**
+        private String bzlb;
+        /**
          * $column.comments
          */
-            private String title;
-            /**
+        private String jg;
+        /**
          * $column.comments
          */
-            private String email;
-            /**
+        private String mz;
+        /**
          * $column.comments
          */
-            private String orgEmail;
-            /**
+        private Float jhbz;
+        /**
          * $column.comments
          */
-            private String workPlace;
-            /**
+        private String grah;
+        /**
          * $column.comments
          */
-            private String remark;
-            /**
+        private String txdz;
+        /**
          * $column.comments
          */
-            private Boolean exclusiveAccount;
-            /**
+        private String dh;
+        /**
          * $column.comments
          */
-            private String deptIdList;
-            /**
+        private String byxx;
+        /**
          * $column.comments
          */
-            private String deptOrderList;
-            /**
+        private Date bysj;
+        /**
          * $column.comments
          */
-            private String extension;
-            /**
+        private String ygzdw;
+        /**
          * $column.comments
          */
-            private Long hiredDate;
-            /**
+        private Date lzyy;
+        /**
          * $column.comments
          */
-            private Boolean active;
-            /**
+        private Date zftcrq;
+        /**
          * $column.comments
          */
-            private Boolean realAuthed;
-            /**
+        private String email;
+        /**
          * $column.comments
          */
-            private Boolean senior;
-            /**
+        private Date htqdrq;
+        /**
          * $column.comments
          */
-            private Boolean admin;
-            /**
+        private String fw;
+        /**
          * $column.comments
          */
-            private Boolean boss;
-            /**
+        private String zhbz;
+        /**
          * $column.comments
          */
-            private String leaderInDept;
-            /**
+        private String jlr;
+        /**
          * $column.comments
          */
-            private String roleList;
-            /**
+        private Date jlrq;
+        /**
          * $column.comments
          */
-            private String unionEmpExt;
-            /**
+        private String yzbm;
+        /**
          * $column.comments
          */
-            private String deptTitleList;
-            /**
+        private String sybz;
+        /**
          * $column.comments
          */
-            private Boolean seniorMode;
-            /**
+        private Date zzrq;
+        /**
          * $column.comments
          */
-            private String language;
-            /**
+        private String ywyId;
+        /**
          * $column.comments
          */
-            private String forceUpdateFields;
-            /**
+        private String text;
+        /**
          * $column.comments
          */
-            private String orgEmailType;
-            /**
+        private String hf;
+        /**
          * $column.comments
          */
-            private String loginEmail;
-            /**
+        private String jjtcsm;
+        /**
          * $column.comments
          */
-            private Date dtLog;
-    
+        private String pcsmc;
+        /**
+         * $column.comments
+         */
+        private String pcsdh;
+        /**
+         * $column.comments
+         */
+        private String srnl;
+        /**
+         * $column.comments
+         */
+        private String rybm;
+        /**
+         * $column.comments
+         */
+        private String byReason;
+        /**
+         * $column.comments
+         */
+        private String zgId;
+        /**
+         * $column.comments
+         */
+        private String flbz;
+        /**
+         * $column.comments
+         */
+        private String zgra;
+        /**
+         * $column.comments
+         */
+        private String zh;
+        /**
+         * $column.comments
+         */
+        private String gy;
+        /**
+         * $column.comments
+         */
+        private String wlkh;
+        /**
+         * $column.comments
+         */
+        private String enname;
+        /**
+         * $column.comments
+         */
+        private String bloodType;
+        /**
+         * $column.comments
+         */
+        private String stature;
+        /**
+         * $column.comments
+         */
+        private String duty;
+        /**
+         * $column.comments
+         */
+        private String weight;
+        /**
+         * $column.comments
+         */
+        private String photoflag;
+        /**
+         * $column.comments
+         */
+        private String ryzp;
+        /**
+         * $column.comments
+         */
+        private String insuranceBz;
+        /**
+         * $column.comments
+         */
+        private Date houseDate;
+        /**
+         * $column.comments
+         */
+        private String transbz;
+        /**
+         * $column.comments
+         */
+        private BigDecimal jsJzfw;
+        /**
+         * $column.comments
+         */
+        private String houseBz;
+        /**
+         * $column.comments
+         */
+        private String zwId;
+        /**
+         * $column.comments
+         */
+        private String yjjbz;
+        /**
+         * $column.comments
+         */
+        private String fhbz;
+        /**
+         * $column.comments
+         */
+        private String xnqcbz;
+        /**
+         * $column.comments
+         */
+        private BigDecimal yjjzhxs;
+        /**
+         * $column.comments
+         */
+        private BigDecimal fhxs;
+        /**
+         * $column.comments
+         */
+        private String newBm;
+        /**
+         * $column.comments
+         */
+        private String shbz;
+        /**
+         * $column.comments
+         */
+        private String shr;
+        /**
+         * $column.comments
+         */
+        private Date shsj;
+        /**
+         * $column.comments
+         */
+        private String cw;
+        /**
+         * $column.comments
+         */
+        private String oldZw;
+        /**
+         * $column.comments
+         */
+        private String rqdm;
+        /**
+         * $column.comments
+         */
+        private String fflx;
+        /**
+         * $column.comments
+         */
+        private String salaryAreaid;
+        /**
+         * $column.comments
+         */
+        private String zd;
+        /**
+         * $column.comments
+         */
+        private BigDecimal monthSalary;
+        /**
+         * $column.comments
+         */
+        private String illcode;
+        /**
+         * $column.comments
+         */
+        private String yhgz;
+        /**
+         * $column.comments
+         */
+        private String pyzt;
+        /**
+         * $column.comments
+         */
+        private String vcBmnew;
+        /**
+         * $column.comments
+         */
+        private String zwbz;
+        /**
+         * $column.comments
+         */
+        private String zwbzold;
+        /**
+         * $column.comments
+         */
+        private String sbbz;
+        /**
+         * $column.comments
+         */
+        private String ybbz;
+        /**
+         * $column.comments
+         */
+        private String meno;
+        /**
+         * $column.comments
+         */
+        private String sh;
+        /**
+         * $column.comments
+         */
+        private Date fflxSj;
+        /**
+         * $column.comments
+         */
+        private String operator;
+        /**
+         * $column.comments
+         */
+        private String gzbz;
+        /**
+         * $column.comments
+         */
+        private Date sgrq;
+        /**
+         * $column.comments
+         */
+        private Float dkbzBak;
+        /**
+         * $column.comments
+         */
+        private String gggrf;
+        /**
+         * $column.comments
+         */
+        private String khh;
+        /**
+         * $column.comments
+         */
+        private String lzsxbz;
+        /**
+         * $column.comments
+         */
+        private String dkddbz;
+        /**
+         * $column.comments
+         */
+        private String gzhzbm;
+        /**
+         * $column.comments
+         */
+        private String zzmmbz;
+        /**
+         * $column.comments
+         */
+        private String yjsbz;
+        /**
+         * $column.comments
+         */
+        private Date dateWork;
+        /**
+         * $column.comments
+         */
+        private String syqx;
+        /**
+         * $column.comments
+         */
+        private String dsznbz;
+        /**
+         * $column.comments
+         */
+        private Date yzzrq;
+        /**
+         * $column.comments
+         */
+        private String bjgzFlag;
+        /**
+         * $column.comments
+         */
+        private String bxbz;
+        /**
+         * $column.comments
+         */
+        private BigDecimal cyjt;
+        /**
+         * $column.comments
+         */
+        private String jbfFlag;
+        /**
+         * $column.comments
+         */
+        private String tranFlag;
+        /**
+         * $column.comments
+         */
+        private Date dtLog;
+
 }

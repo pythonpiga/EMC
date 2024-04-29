@@ -107,6 +107,10 @@ public class InfoServiceImpl implements InfoService {
     public Rsjx findUser(String account){
         return  rsjxDao.selectOneByDKXH( account);
     }
+
+    public String findUserAuth(String account){
+        return  rsjxDao.selectUserAuthByDKXH( account);
+    }
     
 
 

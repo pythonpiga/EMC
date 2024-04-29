@@ -82,6 +82,11 @@ public class HtExcelData implements Serializable {
 	 * 水电气抵扣额
 	 */
 	private BigDecimal sdqdke;
+
+	/**
+	 * 截止2021.12.31已发放奖励
+	 */
+	private String yffjl2021;
 	
 
 

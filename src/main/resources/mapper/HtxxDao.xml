@@ -260,7 +260,7 @@
         ht_sno as htsno,
         DATEPART(yyyy,qdrq) as nd,
         htbh,
-        (select  xm from ding_rs_jx where dkxh=(CAST(ywy_id AS VARCHAR))) as khjl ,
+        (select  xm from rs_jx where dkxh=(CAST(ywy_id AS VARCHAR))) as khjl ,
         htmc,
         qdrq,
         htzje,
@@ -464,7 +464,7 @@
             htgsbm=#{htzt },                 --  合同主体
             sws_id=#{sws },                  --  事务所
             xmb_id=#{ yybm},                 --  运营部门
-            ywy_id = (select dkxh from ding_rs_jx where xm=#{khjl}),              --  客户经理
+            ywy_id = (select dkxh from rs_jx where xm=#{khjl}),              --  客户经理
             saletype=#{xslb },               --  销售类别
             tcjsdwdh=#{ jsdw},               --  结算单位
             htlb=#{htlb },                    --  合同类别
@@ -1078,8 +1078,8 @@
             ccusname  as yhkhmc,
             fklrr as lrr,
             fklrsj  as lrsj,
-            (select  xm from ding_rs_jx where dkxh= zgdh)  as zg,
-            (select  xm from ding_rs_jx where dkxh= ywy_id) as khjl,
+            (select  xm from rs_jx where dkxh= zgdh)  as zg,
+            (select  xm from rs_jx where dkxh= ywy_id) as khjl,
             zgjdtc as  zgtc,
             hxqtewfje as hxqtewf
         from ht_fkb
@@ -1126,8 +1126,8 @@
             #{yhkhmc},
             #{lrr},
             CONVERT(DATETIME, #{lrsj}, 102),
-            (select  dkxh from  ding_rs_jx where xm=#{zg} ),
-            (select  dkxh from  ding_rs_jx where xm=#{khjl} ),
+            (select  dkxh from  rs_jx where xm=#{zg} ),
+            (select  dkxh from  rs_jx where xm=#{khjl} ),
             #{zgtc},
             #{hxqtewf},
             #{bankaccount}
@@ -1148,13 +1148,28 @@
             memo=#{beizhu},
             ccuscode= #{yykhbm},
             ccusname=#{yhkhmc},
-            zgdh=(select   dkxh from  ding_rs_jx where xm=#{zg} ),
-            ywy_id=(select  dkxh from  ding_rs_jx where xm=#{khjl} ),
+            zgdh=(select   dkxh from  rs_jx where xm=#{zg} ),
+            ywy_id=(select  dkxh from  rs_jx where xm=#{khjl} ),
             zgjdtc=#{zgtc},
             hxqtewfje =#{hxqtewf}
         where id=#{skxh}
             
     </update>
+
+    <insert id="insertSkCf"  useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.U8Info">
+        INSERT INTO U8_info_new
+        VALUES
+        ( '20170001',
+          '焦作二院',
+          '202312',
+          1300,
+          0,
+          0,
+          0,
+          '202401',
+          '2024-04-29 09:15'
+        )
+    </insert>
 
 
  

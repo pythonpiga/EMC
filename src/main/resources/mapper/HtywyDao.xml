@@ -6,14 +6,40 @@
     <select id="selectInfoList" resultType="com.broad.emc.module.vo.HtywyVo">
         select
             (select sws_mc from ht_sws where sws_id=ht.sws_id) as sws,
-            (select top 1 xm from rs_kq_spr where dkxh=ywy_id) as khjl,
+            (select xm from rs_jx where dkxh=ht.ywy_id) as khjl,
             case when hzrylb=01 then '签单客户经理'
             else '主管'
             end as rylb,
             htbl,
-            tcbl
+            tcbl,
+            case when (select bzlb from rs_jx where dkxh=ht.ywy_id)='y' then '在职'
+            else '离职'
+            end as type,
+            op_time as opTime
         from ht_htywy ht
-        where ht_sno=#{htsno}
+        where  flag=1 and ht_sno=#{htsno} 
+
+    </select>
+
+    <select id="selectTcryHistoryList" resultType="com.broad.emc.module.vo.HtywyVo">
+        select
+            ht_sno,
+            (select sws_mc from ht_sws where sws_id=ywy.sws_id) as sws,
+            (select xm from rs_jx where dkxh=ywy.ywy_id) as khjl,
+            case when hzrylb=01 then '签单客户经理'	else '主管'
+                end as rylb,
+            tcbl,
+            case when (select bzlb from rs_jx where dkxh=ywy.ywy_id)='y' then '在职' else '离职'
+                end as type,
+            (select sws_mc from ht_sws where sws_id=(select sws_id from ht_htywy where ywy_id=ywy. parent_ywy_id)  ) as swsOld,
+            (select xm from rs_jx where dkxh=(select ywy_id from ht_htywy where ywy_id=ywy. parent_ywy_id)) as khjlOld,
+            case when (select hzrylb from ht_htywy where ywy_id=ywy. parent_ywy_id)=01 then '签单客户经理'	else '主管'
+                end as rylbOld,
+            (select tcbl from ht_htywy where ywy_id=ywy. parent_ywy_id) as tcblOld,
+            case when (select bzlb from rs_jx where dkxh=(select ywy_id from ht_htywy where ywy_id=ywy. parent_ywy_id) )='y' then '在职' else '离职'
+                end as typeOld,
+            op_time
+        from  ht_htywy ywy WHERE ht_sno =#{htsno} and parent_ywy_id !=''
 
     </select>
 
@@ -25,7 +51,11 @@
             ywy_id,
             hzrylb,
             htbl,
-            tcbl
+            tcbl,
+            type,
+            parent_ywy_id,
+            op_time,
+            flag
         ) values (
             case  
                 when (select ISNULL((select max(id) from ht_htywy), '')) ='0' then '1'
@@ -33,23 +63,24 @@
             end ,
             #{htsno},
             #{sws},
-            (select dkxh  from ding_rs_jx where xm=#{khjl} ),
+            (select dkxh  from rs_jx where xm=#{khjl} ),
             #{rylb},
             #{htbl},
-            #{tcbl}
+            #{tcbl},
+            #{type},
+            (select dkxh  from rs_jx where xm=#{parentYwyXm} ),
+            CONVERT(DATETIME, #{opTime}, 120),
+            '1'
         )
 
     </insert>
 
     <update id="updateTcryByHtsno"  useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.HtywyVo">
         UPDATE ht_htywy 
-            SET sws_id =#{sws},
-            ywy_id =(select dkxh  from ding_rs_jx where xm=#{khjl} ),
-            hzrylb =#{rylb},
-            htbl =#{htbl},
-            tcbl =#{tcbl}
+            SET flag='0',
+            op_time=CONVERT(DATETIME, #{opTime}, 120)
         WHERE
-            ht_sno =#{htsno} and ywy_id=(select  dkxh  from ding_rs_jx where xm=#{khjl} )
+            ht_sno =#{htsno} and ywy_id=(select  dkxh  from rs_jx where xm=#{parentYwyXm} )
         
     </update>
 

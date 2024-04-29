@@ -15,11 +15,13 @@ public interface HtywyDao extends BaseMapper<Htywy> {
 
     List<HtywyVo>  selectInfoList(String htsno);
 
+    List<HtywyVo>  selectTcryHistoryList(String htsno);
+
     int insertTcry(HtywyVo htywyVo);
 
     int updateTcryByHtsno(HtywyVo htywyVo);
 
-    @Delete(" delete from ht_htywy where ht_sno=#{htsno} and sws_id=#{sws} and  ywy_id =(select top 1 dkxh  from rs_kq_spr where xm=#{khjl} ) and htbl =#{htbl} and tcbl =#{tcbl} ")
+    @Delete(" delete from ht_htywy where ht_sno=#{htsno} and  ywy_id =(select dkxh  from rs_jx where xm=#{khjl} )  and tcbl =#{tcbl} ")
     int delTcryByHtsno(HtywyVo htywyVo);
 
 }

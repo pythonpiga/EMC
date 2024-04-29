@@ -33,7 +33,8 @@
             zscp_2021,
             nf_2021,
             yyksqbz,
-            sdqdke
+            sdqdke,
+            yffjl2021
             )
        VALUES ( 
             #{htSno},
@@ -49,7 +50,8 @@
             #{zscp2021},
             #{nf2021},
             #{yyksqbz},
-            #{sdqdke}
+            #{sdqdke},
+            #{yffjl2021}
         )
     </insert>
 
@@ -69,7 +71,8 @@
                 zscp_2021=#{zscp2021},
                 nf_2021=#{nf2021},
                 yyksqbz=#{yyksqbz},
-                sdqdke=#{sdqdke}
+                sdqdke=#{sdqdke},
+                yffjl2021=#{yffjl2021}
        
         where ht_sno =#{htSno} and year= #{year}
          
@@ -105,7 +108,11 @@
         rylx,
         tcje5s,
         wdbnf,
-        time
+        time,
+        op_time,
+        type,
+        htmc,
+        htbh
          ) 
        VALUES ( 
             #{htSno},
@@ -119,7 +126,7 @@
             #{dk},
             #{dj},
             #{zscp},
-            null,               --水电气抵扣额
+            #{sdq},               --水电气抵扣额
             #{jlrl},
             #{tcry},
             #{tcbl},
@@ -127,41 +134,13 @@
             #{rylx},
             #{tcje5s},
             #{wdbnf},
-            #{time}
+            #{time},
+            #{opTime},
+            #{type},
+            #{htmc},
+            #{htbh}
         )
     </insert>
-
-    <select id="selectTcjg" resultType="com.broad.emc.module.entity.HtTcjg">
-        select  *  from ht_tcjg 
-        where ht_sno=#{htSno}
-        <if test="year!=null &amp; year!=''">
-            and year=#{year}
-        </if>
-        <if test="jd!=null &amp; jd!=''">
-            and jd=#{jd}
-        </if>
-        <if test="tcry!=null &amp; tcry!=''">
-            and tcry=#{tcry}
-        </if>
-        
-        
-    </select>
-
-    <select id="queryTcjgList" resultType="com.broad.emc.module.entity.HtTcjg">
-        select  *  from ht_tcjg
-        where ht_sno=#{htSno}
-        <if test="year!=null &amp; year!=''">
-            and year=#{year}
-        </if>
-        <if test="jd!=null &amp; jd!=''">
-            and jd=#{jd}
-        </if>
-        <if test="tcry!=null &amp; tcry!=''">
-            and tcry=#{tcry}
-        </if>
-
-
-    </select>
 
     <update id="updateTcjgInfo"  parameterType="com.broad.emc.module.entity.HtTcjg">
         update ht_tcjg
@@ -184,6 +163,9 @@
             <if test="sbft != null and sbft != '' " >
                 sbft=#{sbft},
             </if>
+            <if test="sdq != null and sdq != '' " >
+                sdq=#{sdq},
+            </if>
             <if test="fy != null and fy != '' " >
                 fy=#{fy},
             </if>
@@ -205,25 +187,35 @@
             <if test="tcry != null and tcry != '' " >
                 tcry=#{tcry},
             </if>
-            <if test="tcbl != null and tcbl != '' " >
-                tcbl=#{tcbl},
-            </if>
-            <if test="tcje != null and tcje != '' " >
-                tcje=#{tcje},
-            </if>
+            
             <if test="rylx != null and rylx != '' " >
                 rylx=#{rylx},
             </if>
-            <if test="tcje5s != null and tcje5s != '' " >
-                tcje5s=#{tcje5s},
-            </if>
+            
             <if test="time != null and time != '' " >
                 time=#{time},
             </if>
-                wdbnf=#{wdbnf}
+            <if test="opTime != null and opTime != '' " >
+                op_time=#{opTime},
+            </if>
+            <if test="type != null and type != '' " >
+                type=#{type},
+            </if>
+            <if test="htmc != null and htmc != '' " >
+                htmc=#{htmc},
+            </if>
+            <if test="htbh != null and htbh != '' " >
+                htbh=#{htbh},
+            </if>
+            wdbnf=#{wdbnf},
+            tcbl=#{tcbl},
+            tcje=#{tcje},
+            tcje5s=#{tcje5s}
+
             
+
         </trim>
-               
+
         where ht_sno =#{htSno}
         <if test="year != null and year != '' " >
             and year=#{year}
@@ -237,6 +229,84 @@
 
     </update>
 
+
+    <select id="selectTcjg" resultType="com.broad.emc.module.entity.HtTcjg">
+        select  *  from ht_tcjg 
+        where ht_sno=#{htSno}
+        <if test="year!=null &amp; year!=''">
+            and year=#{year}
+        </if>
+        <if test="jd!=null &amp; jd!=''">
+            and jd=#{jd}
+        </if>
+        <if test="tcry!=null &amp; tcry!=''">
+            and tcry=#{tcry}
+        </if>
+        
+        
+    </select>
+
+    <select id="queryTcjgList" resultType="com.broad.emc.module.entity.HtTcjg">
+        select  *  from ht_tcjg
+        where 1=1
+        <if test="htSno!=null &amp; htSno!=''">
+            and ht_sno=#{htSno}
+        </if>
+        <if test="htmc!=null &amp; htmc!=''">
+            and htmc like  ('%'+#{htmc}+'%')
+        </if>
+        <if test="type!=null &amp; type!=''">
+            and type=#{type}
+        </if>
+        <if test="year!=null &amp; year!=''">
+            and year=#{year}
+        </if>
+        <if test="jd!=null &amp; jd!=''">
+            and jd=#{jd}
+        </if>
+        <if test="tcry!=null &amp; tcry!=''">
+            and tcry=#{tcry}
+        </if>
+
+
+    </select>
+
+    <select id="selectTcjgList" resultType="com.broad.emc.module.entity.HtTcjg">
+        SELECT
+            distinct
+            ht_sno AS htSno,
+            htbh,
+            htmc,
+            case
+            when type='EMC' then '大型EMC奖励'
+            when type='DK' then '到款奖励'
+            end as type,
+            year,
+            jd
+        FROM
+        ht_tcjg        
+        where 1=1
+        <if test="htSno!=null &amp; htSno!=''">
+            and ht_sno=#{htSno}
+        </if>
+        <if test="htmc!=null &amp; htmc!=''">
+            and htmc like  ('%'+#{htmc}+'%')
+        </if>
+        <if test="type!=null &amp; type!=''">
+            and type=#{type}
+        </if>
+        <if test="year!=null &amp; year!=''">
+            and year=#{year}
+        </if>
+        <if test="jd!=null &amp; jd!=''">
+            and jd=#{jd}
+        </if>
+        <if test="tcry!=null &amp; tcry!=''">
+            and tcry=#{tcry}
+        </if>
+
+    </select>
+    
 
     <select id="getWdbnfByHtsnoAndTime" resultType="java.lang.String">
         SELECT DISTINCT wdbnf FROM ht_tcjg

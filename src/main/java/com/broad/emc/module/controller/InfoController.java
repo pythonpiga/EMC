@@ -428,9 +428,18 @@ public class InfoController {
         return  res;
     }
 
-
-
-
-
+    /**
+     * 获取用户权限
+     * @param account
+     * @return
+     */
+    @RequestMapping("/getUserAuth")
+    public ReturnData getUserAuth(String account){
+        ReturnData res=ReturnData.getSuccessData();
+        String auth=infoService.findUserAuth(account);
+        res.setData(auth);
+        return  res;
+    }
+    
 
 }

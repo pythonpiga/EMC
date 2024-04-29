@@ -6,6 +6,7 @@ import com.broad.emc.module.entity.HtDb;
 import com.broad.emc.module.entity.HtExcelData;
 import com.broad.emc.module.entity.HtTcjg;
 import com.broad.emc.module.service.CommissionService;
+import com.broad.emc.module.vo.CommonVo;
 import com.broad.emc.module.vo.HtywyVo;
 import org.springframework.stereotype.Service;
 
@@ -24,6 +25,10 @@ public class CommissionServiceImpl implements CommissionService {
     
     public List<HtywyVo> getTcry(String htsno){
         return htywyDao.selectInfoList(htsno);
+    }
+
+    public List<HtywyVo> getTcryHistoryList(String htsno){
+        return htywyDao.selectTcryHistoryList(htsno);
     }
     
     public int addTcry(HtywyVo htywyVo){
@@ -62,6 +67,10 @@ public class CommissionServiceImpl implements CommissionService {
         return calculateCommission.addTcjg(htTcjg);
     }
 
+    public int updateTcjg(HtTcjg htTcjg){
+        return calculateCommission.updateTcjgInfo(htTcjg);
+    }
+
     public int saveDbInfo(HtDb htDb){
         return calculateCommission.addDbInfo(htDb);
     }
@@ -86,9 +95,12 @@ public class CommissionServiceImpl implements CommissionService {
         return calculateCommission.queryTcjgList(htTcjg);
     }
 
-    public int updateTcjg(HtTcjg htTcjg){
-        return calculateCommission.updateTcjgInfo(htTcjg);
+    public List<HtTcjg> getTcjgList(HtTcjg htTcjg){
+        return calculateCommission.selectTcjgList(htTcjg);
     }
+    
+
+ 
     
     public List getWdbnf(String htsno, String time){
         return calculateCommission.getWdbnfByHtsnoAndTime(htsno,time);

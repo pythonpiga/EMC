@@ -30,8 +30,17 @@ public class HtywyVo {
     private String jzrq;        // 截止日期
     private String gcs;         // 工程师
     private String xm;          // 姓名
+    private String type;        // 在职类别 0离职 1 在职 2 调岗 3 继任
+    
+    private String opTime;      //操作时间
+    private String parentYwyId; //被继任人卡号
+    private String parentYwyXm; //被继任人姓名
 
-
+    private String swsOld;         // 变更前记录
+    private String khjlOld;
+    private String rylbOld;
+    private String typeOld;
+    private String tcblOld;
 
 
 }
