@@ -262,6 +262,7 @@
         htbh,
         (select  xm from rs_jx where dkxh=(CAST(ywy_id AS VARCHAR))) as khjl ,
         htmc,
+        yyxmbh,
         qdrq,
         htzje,
         yhqc,
@@ -1156,23 +1157,545 @@
             
     </update>
 
-    <insert id="insertSkCf"  useGeneratedKeys="true" parameterType="com.broad.emc.module.entity.U8Info">
+    <update id="updateSkOpflag"  parameterType="com.broad.emc.module.vo.U8InfoVo">
+<!--        update u8_info_new-->
+<!--            set op_flag=0-->
+<!--        where xmdh=#{xmdh}-->
+<!--        and ny=#{parentNy}-->
+<!--        and op_time != #{opTime}-->
+
+       
+    </update>
+
+    <insert id="insertSkCf"  useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.U8InfoVo">
         INSERT INTO U8_info_new
         VALUES
-        ( '20170001',
-          '焦作二院',
-          '202312',
-          1300,
-          0,
-          0,
-          0,
-          '202401',
-          '2024-04-29 09:15'
+        (
+            #{xmdh},
+            #{htmc},
+            #{parentNy},
+            0,
+            0,
+            0,
+            0,
+            #{parentNy},
+            #{opTime},
+            0,
+            0,
+            <choose>
+                <when test=" type == 'sr' ">
+                    'sr'
+                </when>
+                <when test=" type == 'cb' ">
+                    'cb'
+                </when>
+                <when test=" type == 'fy' ">
+                    'fy'
+                </when>
+                <when test=" type == 'dk' ">
+                    'dk'
+                </when>
+            </choose>
         )
+        
+    
     </insert>
 
+    <insert id="insertSkTj"  useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.U8InfoVo">
+        INSERT INTO U8_info_new
+        VALUES
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            #{xmdh},
+            #{htmc},
+            #{ny},
+            <choose>
+                <when test=" type == 'sr' ">
+                    #{sr},
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+            <choose>
+                <when test=" type == 'cb' ">
+                    #{cb},
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+            <choose>
+                <when test=" type == 'fy' ">
+                    #{fy},
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+            <choose>
+                <when test=" type == 'dk' ">
+                    #{dk},
+                </when>
+                <otherwise>
+                    0,
+                </otherwise>
+            </choose>
+            #{parentNy},
+            #{opTime},
+            1,
+            1,
+            <choose>
+                <when test=" type == 'sr' ">
+                    'sr'
+                </when>
+                <when test=" type == 'cb' ">
+                    'cb'
+                </when>
+                <when test=" type == 'fy' ">
+                    'fy'
+                </when>
+                <when test=" type == 'dk' ">
+                    'dk'
+                </when>
+            </choose>
+            
+        </trim>
+    </insert>
 
- 
+    <select id="queryU8InfoList"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        SELECT
+            u8.xmdh,
+            u8.htmc,
+            u8.xmdh,
+            u8.ny,
+            <choose>
+                <when test="type == 'sr'">
+                    case
+                        when ISNULL(u8.sr, '0')=0 then 0
+                        else u8.sr
+                    end	as sr,
+                </when>
+                <when test="type == 'cb'">
+                    case
+                        when ISNULL(u8.cb, '0')=0 then 0
+                        else u8.cb
+                    end	as cb,
+                </when>
+                <when test="type == 'fy'">
+                    case
+                        when ISNULL(u8.fy, '0')=0 then 0
+                        else u8.fy
+                    end	as fy,
+                </when>
+                <when test="type == 'dk'">
+                    case
+                        when ISNULL(u8.dk, '0')=0 then 0
+                        else u8.dk
+                    end	as dk,
+                </when>
+            </choose>
+        
+            u8_info_new.parent_ny as parentNy,
+            CASE
+                WHEN ISNULL( (SELECT DISTINCT parent_ny FROM u8_info_new WHERE (parent_ny = u8.ny or ny = u8.ny) 
+                                <choose>
+                                    <when test=" type== 'sr' ">
+                                        and sr!= 0 and type='sr'
+                                    </when>
+                                    <when test=" type== 'cb' ">
+                                        and cb!= 0 and type='cb'
+                                    </when>
+                                    <when test=" type== 'fy' ">
+                                        and fy!= 0 and type='fy'
+                                    </when>
+                                    <when test=" type== 'dk' ">
+                                        and dk!= 0 and type='dk'
+                                    </when>
+                                </choose>
+                    ), 0 ) = '0' THEN '' 
+                ELSE '已拆分'
+            END AS Flag 
+        FROM
+            <choose>
+                <when test=" type== 'sr' ">
+                    u8_splitData_sr
+                </when>
+                <when test=" type== 'cb' ">
+                    u8_splitData_cb
+                </when>
+                <when test=" type== 'fy' ">
+                    u8_splitData_fy
+                </when>
+                <when test=" type== 'dk' ">
+                    u8_splitData_dk
+                </when>
+            </choose>
+            u8 left join (select distinct xmdh,ny,parent_ny from u8_info_new 
+                                         where 1=1
+                                        <choose>
+                                            <when test=" type == 'sr' ">
+                                                and type='sr'
+                                            </when>
+                                            <when test=" type == 'cb' ">
+                                                and type='cb'
+                                            </when>
+                                            <when test=" type == 'fy' ">
+                                                and type='fy'
+                                            </when>
+                                            <when test=" type == 'dk' ">
+                                                and type= 'dk'
+                                            </when>
+                                        </choose>
+            ) u8_info_new on u8.ny=u8_info_new.ny and u8.xmdh=u8_info_new.xmdh
+        WHERE
+            u8.xmdm =#{yyxmbh}
+            AND u8.ny LIKE ( #{ ny }+ '%' ) 
+            AND SUBSTRING ( u8.ny, 5, 2 ) BETWEEN '01' AND '12'
+    </select>
+
+    <select id="querySrSplitHistoryData"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        SELECT
+            htmc,
+            xmdm,
+            xmdh,
+            ny,
+            sr,
+            nyNew,
+            srNew,
+            opTime
+        FROM
+            u8_history_sr
+        where
+            xmdm = #{yyxmbh}
+            <!-- 拆分历史所有数据查询-->
+            <if test="ny!=null &amp; ny!=''">
+                and ny LIKE (#{ny}+'%')
+            </if>
+            <!-- 单个拆分数据溯源查询-->
+            <if test="nyNew!=null &amp; nyNew!=''">
+                and ( ny LIKE (#{nyNew}+'%') or nyNew LIKE (#{nyNew}+'%') )
+            </if>
+            AND SUBSTRING (ny, 5, 2 ) BETWEEN '01' AND '12'
+        order by ny desc
+    </select>
+
+    <select id="queryCbSplitHistoryData"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        SELECT
+        htmc,
+        xmdm,
+        xmdh,
+        ny,
+        cb,
+        nyNew,
+        cbNew,
+        opTime
+        FROM
+        u8_history_cb
+        where
+        xmdm = #{yyxmbh}
+        <!-- 拆分历史所有数据查询-->
+        <if test="ny!=null &amp; ny!=''">
+            and ny LIKE (#{ny}+'%')
+        </if>
+        <!-- 单个拆分数据溯源查询-->
+        <if test="nyNew!=null &amp; nyNew!=''">
+            and ( ny LIKE (#{nyNew}+'%') or nyNew LIKE (#{nyNew}+'%') )
+        </if>
+        AND SUBSTRING (ny, 5, 2 ) BETWEEN '01' AND '12'
+        order by ny desc
+    </select>
+
+    <select id="queryFySplitHistoryData"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        SELECT
+        htmc,
+        xmdm,
+        xmdh,
+        ny,
+        fy,
+        nyNew,
+        fyNew,
+        opTime
+        FROM
+        u8_history_fy
+        where
+        xmdm = #{yyxmbh}
+        <!-- 拆分历史所有数据查询-->
+        <if test="ny!=null &amp; ny!=''">
+            and ny LIKE (#{ny}+'%')
+        </if>
+        <!-- 单个拆分数据溯源查询-->
+        <if test="nyNew!=null &amp; nyNew!=''">
+            and ( ny LIKE (#{nyNew}+'%') or nyNew LIKE (#{nyNew}+'%') )
+        </if>
+        AND SUBSTRING (ny, 5, 2 ) BETWEEN '01' AND '12'
+        order by ny desc
+    </select>
+
+    <select id="queryDkSplitHistoryData"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        SELECT
+        htmc,
+        xmdm,
+        xmdh,
+        ny,
+        dk,
+        nyNew,
+        dkNew,
+        opTime
+        FROM
+        u8_history_dk
+        where
+        xmdm = #{yyxmbh}
+        <!-- 拆分历史所有数据查询-->
+        <if test="ny!=null &amp; ny!=''">
+            and ny LIKE (#{ny}+'%')
+        </if>
+        <!-- 单个拆分数据溯源查询-->
+        <if test="nyNew!=null &amp; nyNew!=''">
+            and ( ny LIKE (#{nyNew}+'%') or nyNew LIKE (#{nyNew}+'%') )
+        </if>
+        AND SUBSTRING (ny, 5, 2 ) BETWEEN '01' AND '12'
+        order by ny desc
+    </select>
+
+
+    <update id="updateSkSplitData"  parameterType="com.broad.emc.module.vo.U8InfoVo">
+        update u8_info_new
+        set ny=#{time},
+            <choose>
+                <when test=" type== 'sr' ">
+                    sr=#{srNew},
+                </when>
+                <when test=" type== 'cb' ">
+                    cb=#{cbNew},
+                </when>
+                <when test=" type== 'fy' ">
+                    fy=#{fyNew},
+                </when>
+                <when test=" type== 'dk' ">
+                    dk=#{dkNew},
+                </when>
+            </choose>
+            
+            op_Time=#{opTimeNew}
+        where xmdh=#{xmdh}
+          and ny=#{nyNew}
+          and parent_ny=#{ny}
+          and flag=1
+          and type=#{type}
+
+    </update>
+
+    <select id="queryU8DataList"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        SELECT
+        htmc,
+        xmdh,
+        xmdm as yyxmbh,
+        ny,
+        sr,
+        cb,
+        fy,
+        dk
+        FROM
+        u8_info  join rs_bm_ny  on  u8_info.xmdh=rs_bm_ny.u8_xmdm
+        WHERE
+        xmdh = #{xmdh}
+        <if test="ny!=null &amp; ny!=''">
+            AND ny LIKE (#{ny}+'%')  
+        </if>
+        AND SUBSTRING ( ny, 5, 2 ) BETWEEN '01' AND '12'
+        order by ny asc
+        
+    
+    </select>
+
+    <select id="queryU8KhbhList"  resultType="com.broad.emc.module.vo.U8KhbhVo">
+        select
+            bm.u8_xmmc as htmc,
+            khmc.u8_xmdm as xmdh,
+            bm.xmdm as yyxmbh,
+            u8_cCusName as khmc,
+            u8_ccus_id as khbh
+        from u8_emc_khmc khmc inner join rs_bm_ny bm on khmc.u8_xmdm=bm.u8_xmdm
+        where 1=1 and flag=1
+        <if test="htmc!=null &amp; htmc!=''">
+            and bm.u8_xmmc like (#{htmc}+'%')
+        </if>
+        <if test="xmdh!=null &amp; xmdh!=''">
+            and khmc.u8_xmdm=#{xmdh}
+        </if>
+        <if test="yyxmbh!=null &amp; yyxmbh!=''">
+            and bm.xmdm=#{yyxmbh}
+        </if>
+        <if test="khmc!=null &amp; khmc!=''">
+            and u8_cCusName=#{khmc}
+        </if>
+        <if test="khbh!=null &amp; khbh!=''">
+            and u8_ccus_id=#{khbh}
+        </if>
+
+    </select>
+
+    <insert id="addU8Khbh" useGeneratedKeys="true" parameterType="com.broad.emc.module.vo.U8KhbhVo">
+        insert into 
+            u8_emc_khmc 
+        VALUEs
+            (
+                #{xmdh},
+                #{htmc},
+                #{khbh},
+                #{khmc},
+                '',
+                1
+            )
+
+    </insert>
+
+    <update id="updateU8KhbhByVo"  parameterType="com.broad.emc.module.vo.U8KhbhVo">
+        update u8_emc_khmc
+        set
+            u8_xmmc=#{htmcNew},
+            u8_xmdm=#{xmdhNew},
+            u8_cCusName=#{khmcNew},
+            u8_ccus_id=#{khbhNew}
+        where
+            u8_xmdm=#{xmdh}
+            and u8_cCusName=#{khmc}
+            and u8_ccus_id=#{khbh}
+
+    </update>
+
+    <update id="deleteU8KhbhByVo"  parameterType="com.broad.emc.module.vo.U8KhbhVo">
+        update u8_emc_khmc
+        set
+            flag=0
+        where
+            u8_xmdm=#{xmdh}
+          and u8_cCusName=#{khmc}
+          and u8_ccus_id=#{khbh}
+
+    </update>
+
+
+    <select id="queryIsSplitData"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        select * from u8_info_new 
+        where 
+            xmdh=#{xmdh} 
+            and  (parent_ny=#{ny} or ny=#{ny}  )
+            <if test="type == 'sr' ">
+                AND sr != 0
+            </if>
+            <if test="type == 'cb' ">
+                AND cb != 0
+            </if>
+            <if test="type == 'fy' ">
+                AND fy != 0
+            </if>
+            <if test="type == 'dk' ">
+                AND dk != 0
+            </if>
+        
+
+
+    </select>
+
+    <select id="queryU8ListByTime"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        SELECT
+        <choose>
+            <when test=" type== 'sr' ">
+                sum(u8.sr) as sr
+            </when>
+            <when test=" type== 'cb' ">
+                sum(u8.cb) as cb
+            </when>
+            <when test=" type== 'fy' ">
+                sum(u8.fy) as fy
+            </when>
+            <when test=" type== 'dk' ">
+                sum(u8.dk) as dk
+            </when>
+        </choose>
+
+        FROM
+        <choose>
+            <when test=" type== 'sr' ">
+                u8_splitData_sr
+            </when>
+            <when test=" type== 'cb' ">
+                u8_splitData_cb
+            </when>
+            <when test=" type== 'fy' ">
+                u8_splitData_fy
+            </when>
+            <when test=" type== 'dk' ">
+                u8_splitData_dk
+            </when>
+        </choose>
+        u8
+        LEFT JOIN ( SELECT DISTINCT xmdh, ny, parent_ny FROM u8_info_new
+        WHERE 1 = 1
+        <choose>
+            <when test=" type== 'sr' ">
+                AND type = 'sr'
+            </when>
+            <when test=" type== 'cb' ">
+                AND type = 'cb'
+            </when>
+            <when test=" type== 'fy' ">
+                AND type = 'fy'
+            </when>
+            <when test=" type== 'dk' ">
+                AND type = 'dk'
+            </when>
+        </choose>
+        ) u8_info_new ON u8.ny= u8_info_new.ny
+        AND u8.xmdh= u8_info_new.xmdh
+        WHERE
+        u8.xmdm = #{yyxmbh}
+        <if test=" startTime==null ">
+            AND u8.ny LIKE ( #{year} + '%' )
+        </if>
+        <if test=" startTime!=null ">
+            AND u8.ny between #{startTime} and #{endTime}
+        </if>
+        and SUBSTRING(u8.ny,0,5) not in (select year from ht_db where ht_sno=#{htsno} and db='0')
+        AND SUBSTRING ( u8.ny, 5, 2 ) BETWEEN '01' AND '12'
+    </select>
+
+    <select id="queryU8DkList"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        select sum(dk) as dk
+        from
+            (select * from u8_info where SUBSTRING ( ny, 0, 5 )   not in (select year from ht_db where ht_sno=#{htsno} and db='0')) u8
+                INNER JOIN rs_bm_ny bm ON u8.xmdh= bm.u8_xmdm
+                inner join ht_ht ht on bm.xmdm=ht.yyxmbh
+        where 
+            <choose>
+                <when test="  yyxmbh==null ">
+                    ht_sno=#{htsno}
+                </when>
+                <when test="  yyxmbh!=null ">
+                    yyxmbh=#{yyxmbh}                
+                </when>
+            </choose>
+        
+            <choose>
+                <when test=" startTime!=null   ">
+                    and ny BETWEEN #{startTime} and #{endTime}
+                </when>
+                <when test=" startTime==null   ">
+                    and ny BETWEEN CONVERT(varchar(11), ht.qdrq, 102) and #{year}
+                </when>
+            </choose>
+           
+    </select>
+    
+    <select id="queryU8DkSjsj"  resultType="com.broad.emc.module.vo.U8InfoVo">
+        select top 1 ny
+        from u8_splitData_dk
+        where xmdm=#{yyxmbh}
+            and ny &lt;= #{year}
+            and dk!=0
+        order by ny desc
+    </select>
 
 
 

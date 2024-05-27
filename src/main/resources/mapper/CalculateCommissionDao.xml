@@ -112,7 +112,8 @@
         op_time,
         type,
         htmc,
-        htbh
+        htbh,
+        status
          ) 
        VALUES ( 
             #{htSno},
@@ -138,7 +139,8 @@
             #{opTime},
             #{type},
             #{htmc},
-            #{htbh}
+            #{htbh},
+            #{status}
         )
     </insert>
 
@@ -229,6 +231,21 @@
 
     </update>
 
+    <delete id="delTcjgInfo"  parameterType="com.broad.emc.module.entity.HtTcjg">
+        delete from ht_tcjg where 1=1
+            <if test="htSno != null and htSno != '' " >
+                and ht_sno=#{htSno}
+            </if>
+            <if test="year != null and year != '' " >
+                and year=#{year}
+            </if>
+            <if test="jd != null and jd != '' " >
+                and jd=#{jd}
+            </if>
+            
+
+    </delete>
+
 
     <select id="selectTcjg" resultType="com.broad.emc.module.entity.HtTcjg">
         select  *  from ht_tcjg 
@@ -313,6 +330,17 @@
         where ht_sno=#{htsno}
         and CONVERT(DATETIME,time,102) &lt;= #{time}         
         
+    </select>
+
+    <select id="queryDbInfo" resultType="com.broad.emc.module.entity.HtDb">
+        select * from ht_db 
+        where 
+            ht_sno=#{htSno} 
+            and year=#{year}
+            <if test="db != null and db != '' " >
+                and db=#{db}
+            </if>
+
     </select>
     
     

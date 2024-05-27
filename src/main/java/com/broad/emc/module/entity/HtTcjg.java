@@ -108,6 +108,11 @@ public class HtTcjg implements Serializable {
 	
 	private String htbh;
 
+	/**
+	 * 提成人员职位状态 在职离职继任
+	 */
+	private String status;
+
 
 
 }

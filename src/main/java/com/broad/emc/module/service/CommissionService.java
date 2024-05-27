@@ -110,7 +110,7 @@ public interface CommissionService {
      * @param 
      * @return
      */
-    HtDb getDbInfo(String htSno,String year);
+    HtDb getDbInfo(String htSno,String year,String db);
 
     /**
      * 查询合同历年净利润率未达标年份集合

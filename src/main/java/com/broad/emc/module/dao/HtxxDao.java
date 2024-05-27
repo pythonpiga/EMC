@@ -38,7 +38,6 @@ public interface HtxxDao extends BaseMapper<Htxx> {
 
     List<HtSkVo> queryHtskByHtsno(String htsno, String time);
 
-    int insertSkCf(U8Info u8Info);
 
     int insertHtSk(HtSkVo htSkVo);
     
@@ -116,6 +115,46 @@ public interface HtxxDao extends BaseMapper<Htxx> {
     List<Htxx> selectHtmcList();
 
 
+    int updateSkOpflag(U8InfoVo u8InfoVo);
+
+    int insertSkCf(U8InfoVo u8InfoVo);
+
+    int insertSkTj(U8InfoVo u8InfoVo);
+
+
+    @Select( "select * from U8_info_new where xmdh='20170001' and parent_ny='202401'" )
+    List<U8Info> querySkSplitDataList(String yyxmbh,String rq);
+
+    List<U8InfoVo> queryU8InfoList(String yyxmbh,String ny,String type);
+
+    List<U8InfoVo> querySrSplitHistoryData(String yyxmbh,String ny,String nyNew);
+    
+    List<U8InfoVo> queryCbSplitHistoryData(String yyxmbh,String ny,String nyNew);
+
+    List<U8InfoVo> queryFySplitHistoryData(String yyxmbh,String ny,String nyNew);
+
+    List<U8InfoVo> queryDkSplitHistoryData(String yyxmbh,String ny,String nyNew);
+
+
+    int updateSkSplitData(U8InfoVo u8InfoVo);
+
+    List<U8InfoVo> queryIsSplitData(U8InfoVo u8InfoVo);
+
+    List<U8InfoVo> queryU8DataList(String xmdh,String ny);
+
+    List<U8KhbhVo> queryU8KhbhList( U8KhbhVo u8KhbhVo);
+
+    int addU8Khbh( U8KhbhVo u8KhbhVo);
+
+    int updateU8KhbhByVo( U8KhbhVo u8KhbhVo);
+
+    int deleteU8KhbhByVo( U8KhbhVo u8KhbhVo);
+
+    U8InfoVo queryU8ListByTime(String htsno,String yyxmbh,String year,String startTime,String endTime,String type);
+
+    U8InfoVo queryU8DkList(String htsno,String yyxmbh,String year,String startTime,String endTime);
+
+    U8InfoVo queryU8DkSjsj(String htsno,String yyxmbh,String year);
 
 
 

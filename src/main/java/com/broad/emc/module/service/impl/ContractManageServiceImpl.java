@@ -7,6 +7,7 @@ import com.broad.emc.module.vo.*;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -47,9 +48,7 @@ public class ContractManageServiceImpl implements ContractManageService {
         return htxxDao.queryHtskByHtsno(htsno,time);
     }
 
-    public int addSkCfData(U8Info u8Info) {
-        return htxxDao.insertSkCf(u8Info);
-    }
+    
     
     public int addHtSk(HtSkVo htSkVo) {
         return htxxDao.insertHtSk(htSkVo);
@@ -183,6 +182,81 @@ public class ContractManageServiceImpl implements ContractManageService {
         return htxxDao.selectHtmcList();
     }
 
+
+    public void addSkCfData(U8InfoVo u8InfoVo) {
+        //数据拆分 更新拆分标志
+        htxxDao.updateSkOpflag(u8InfoVo);
+
+        //数据拆分 原始数据 =》 0
+        htxxDao.insertSkCf(u8InfoVo);
+
+        //数据统计 拆分后新数据
+        htxxDao.insertSkTj(u8InfoVo);
+    }
+
+    public void updateSkCfData(U8InfoVo u8InfoVo) {
+        htxxDao.updateSkSplitData(u8InfoVo);
+        
+    }
+
+    public List<U8Info> getSkSplitData(String yyxmbh,String rq) {
+        return htxxDao.querySkSplitDataList(yyxmbh,rq);
+    }
+    
+    public List<U8InfoVo> getU8InfoList(String yyxmbh,String ny,String type){
+        return htxxDao.queryU8InfoList(yyxmbh,ny,type);
+    }
+
+    public List<U8InfoVo> getSplitHistoryData(String yyxmbh,String ny,String nyNew,String type){
+        List<U8InfoVo> u8InfoVos=new ArrayList<>();
+        if( "sr".equals(type) ){
+            u8InfoVos= htxxDao.querySrSplitHistoryData(yyxmbh,ny,nyNew);
+        }else if( "cb".equals(type) ){
+            u8InfoVos= htxxDao.queryCbSplitHistoryData(yyxmbh,ny,nyNew);
+        }else if( "fy".equals(type) ){
+            u8InfoVos= htxxDao.queryFySplitHistoryData(yyxmbh,ny,nyNew);
+        }else if( "dk".equals(type) ){
+            u8InfoVos= htxxDao.queryDkSplitHistoryData(yyxmbh,ny,nyNew);
+        }
+        return u8InfoVos;
+    }
+
+    public List<U8InfoVo> CheckSplitData(U8InfoVo u8InfoVo) {
+        return htxxDao.queryIsSplitData(u8InfoVo);
+
+    }
+
+    public List<U8InfoVo> getU8DataList(String xmdh,String ny){
+        return htxxDao.queryU8DataList(xmdh,ny);
+    }
+
+    public List<U8KhbhVo> getU8KhbhList(U8KhbhVo u8KhbhVo){
+        return htxxDao.queryU8KhbhList(u8KhbhVo);
+    }
+
+    public int saveU8Khbh(U8KhbhVo u8KhbhVo){
+        return htxxDao.addU8Khbh(u8KhbhVo);
+    }
+
+    public int updateU8Khbh(U8KhbhVo u8KhbhVo){
+        return htxxDao.updateU8KhbhByVo(u8KhbhVo);
+    }
+
+    public int delU8Khbh(U8KhbhVo u8KhbhVo){
+        return htxxDao.deleteU8KhbhByVo(u8KhbhVo);
+    }
+
+    public U8InfoVo getU8ListByTime(String htsno,String yyxmbh,String year,String startTime,String endTime,String type){
+        return htxxDao.queryU8ListByTime( htsno,yyxmbh,year,startTime,endTime,type);
+    }
+
+    public U8InfoVo getU8DkList(String htsno,String yyxmbh,String year,String startTime,String endTime){
+        return htxxDao.queryU8DkList(htsno,yyxmbh,year,startTime,endTime);
+    }
+
+    public U8InfoVo getU8DkSjsj(String htsno,String yyxmbh,String year){
+        return htxxDao.queryU8DkSjsj(htsno,yyxmbh,year);
+    }
 
 
 

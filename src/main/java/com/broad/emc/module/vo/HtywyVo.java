@@ -42,5 +42,8 @@ public class HtywyVo {
     private String typeOld;
     private String tcblOld;
 
+    private String parentYwyid;
+    private String flag;  
+
 
 }

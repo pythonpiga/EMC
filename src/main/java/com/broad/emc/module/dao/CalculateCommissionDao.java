@@ -27,11 +27,13 @@ public interface CalculateCommissionDao extends BaseMapper<HtExcelData> {
 
     int updateTcjgInfo( HtTcjg htTcjg);
 
+    int delTcjgInfo( HtTcjg htTcjg);
+
+
     @Insert(" insert into ht_db values ( #{htSno},#{htName},#{year},#{jlrl},#{db}  ) ")
     int addDbInfo(HtDb htDb);
     
-    @Select(" select * from ht_db where ht_sno=#{htSno} and year=#{year} ")
-    HtDb queryDbInfo(String htSno,String year);
+    HtDb queryDbInfo(String htSno,String year,String db);
 
     @Select(" select * from ht_db where ht_sno=#{htSno} and db='0' ")
     List<HtDb> queryUnDbList(String htSno);

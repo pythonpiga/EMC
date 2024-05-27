@@ -4,7 +4,7 @@
 <mapper namespace="com.broad.emc.module.dao.HtywyDao">
 
     <select id="selectInfoList" resultType="com.broad.emc.module.vo.HtywyVo">
-        select
+        select distinct
             (select sws_mc from ht_sws where sws_id=ht.sws_id) as sws,
             (select xm from rs_jx where dkxh=ht.ywy_id) as khjl,
             case when hzrylb=01 then '签单客户经理'
@@ -15,6 +15,8 @@
             case when (select bzlb from rs_jx where dkxh=ht.ywy_id)='y' then '在职'
             else '离职'
             end as type,
+            parent_ywy_id as parentYwyid,
+            flag,
             op_time as opTime
         from ht_htywy ht
         where  flag=1 and ht_sno=#{htsno} 
@@ -31,12 +33,12 @@
             tcbl,
             case when (select bzlb from rs_jx where dkxh=ywy.ywy_id)='y' then '在职' else '离职'
                 end as type,
-            (select sws_mc from ht_sws where sws_id=(select sws_id from ht_htywy where ywy_id=ywy. parent_ywy_id)  ) as swsOld,
-            (select xm from rs_jx where dkxh=(select ywy_id from ht_htywy where ywy_id=ywy. parent_ywy_id)) as khjlOld,
-            case when (select hzrylb from ht_htywy where ywy_id=ywy. parent_ywy_id)=01 then '签单客户经理'	else '主管'
+            (select sws_mc from ht_sws where sws_id=(select DISTINCT sws_id from ht_htywy where ywy_id=ywy. parent_ywy_id and flag=0)  ) as swsOld,
+            (select xm from rs_jx where dkxh=(select DISTINCT ywy_id from ht_htywy where ywy_id=ywy. parent_ywy_id and flag=0)) as khjlOld,
+            case when (select DISTINCT hzrylb from ht_htywy where ywy_id=ywy. parent_ywy_id and flag=0)=01 then '签单客户经理'	else '主管'
                 end as rylbOld,
-            (select tcbl from ht_htywy where ywy_id=ywy. parent_ywy_id) as tcblOld,
-            case when (select bzlb from rs_jx where dkxh=(select ywy_id from ht_htywy where ywy_id=ywy. parent_ywy_id) )='y' then '在职' else '离职'
+            (select DISTINCT tcbl from ht_htywy where ywy_id=ywy. parent_ywy_id and flag=0) as tcblOld,
+            case when (select DISTINCT bzlb from rs_jx where dkxh=(select DISTINCT ywy_id from ht_htywy where ywy_id=ywy. parent_ywy_id and flag=0) )='y' then '在职' else '离职'
                 end as typeOld,
             op_time
         from  ht_htywy ywy WHERE ht_sno =#{htsno} and parent_ywy_id !=''

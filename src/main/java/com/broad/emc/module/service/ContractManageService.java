@@ -267,13 +267,7 @@ public interface ContractManageService  {
      * @return
      */
     List<HtSkVo> getHtskList(String htsno, String time);
-
-    /**
-     * 收款数据拆分记录保存
-     * @param u8Info
-     * @return
-     */
-    int addSkCfData(U8Info u8Info);
+    
 
     /**
      * 新增合同收款
@@ -306,9 +300,110 @@ public interface ContractManageService  {
     
     List<Htxx> getHtmcList();
 
-  
+
+    /**
+     * 收款数据拆分记录保存
+     * @param u8InfoVo
+     * @return
+     */
+    void addSkCfData(U8InfoVo u8InfoVo);
+
+    /**
+     * 收款数据拆分调整
+     * @param u8InfoVo
+     * @return
+     */
+    void updateSkCfData(U8InfoVo u8InfoVo);
+
+    /**
+     * 收款根据项目代号日期查询已拆分数据
+     * @param
+     * @return
+     */
+    List<U8Info> getSkSplitData(String yyxmbh,String rq);
+
+    /**
+     * 收款根据运营项目编号日期查询拆分后新数据
+     * @param
+     * @return
+     */
+    List<U8InfoVo> getU8InfoList(String yyxmbh,String ny,String type);
     
-    
+    /**
+     * 收款根据运营项目编号和日期查询拆分历史
+     * @param
+     * @return
+     */
+    List<U8InfoVo> getSplitHistoryData(String yyxmbh,String ny,String nyNew,String type);
+
+    /**
+     * 核对收入数据是否已拆分
+     * @param u8InfoVo
+     * @return
+     */
+    List<U8InfoVo> CheckSplitData(U8InfoVo u8InfoVo);
+
+    /**
+     * 获取U8项目代号
+     * @param 
+     * @return
+     */
+    List<U8InfoVo> getU8DataList(String xmdh,String ny);
+
+    /**
+     * 获取U8客户编号信息
+     * @param
+     * @return
+     */
+    List<U8KhbhVo> getU8KhbhList(U8KhbhVo u8KhbhVo);
+
+    /**
+     * 添加U8客户编号信息
+     * @param
+     * @return
+     */
+    int saveU8Khbh(U8KhbhVo u8KhbhVo);
+
+    /**
+     * 更新U8客户编号信息
+     * @param
+     * @return
+     */
+    int updateU8Khbh(U8KhbhVo u8KhbhVo);
+
+    /**
+     * 删除U8客户编号信息
+     * @param
+     * @return
+     */
+    int delU8Khbh(U8KhbhVo u8KhbhVo);
+
+
+    /**
+     * 核算模型数据统计
+     * 获取指定年份的U8数据（去除不达标数据）
+     * @param
+     * @return
+     */
+    U8InfoVo getU8ListByTime(String htsno,String yyxmbh,String year,String startTime,String endTime,String type);
+
+    /**
+     * 核算模型数据统计
+     * 获取历年累计到款数据（去除未达标年份）
+     * @param
+     * @return
+     */
+    U8InfoVo getU8DkList(String htsno,String yyxmbh,String year,String startTime,String endTime);
+
+    /**
+     * 核算模型数据统计
+     * 获取拆分后到款最后实际到款时间（算入分摊期数）
+     * @param
+     * @return
+     */
+    U8InfoVo getU8DkSjsj(String htsno,String yyxmbh,String year);
+
+
 
 }
 

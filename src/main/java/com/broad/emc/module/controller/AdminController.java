@@ -103,7 +103,7 @@ public class AdminController {
 
         try {
             subject.login(token);       //shiro调用login时会调用自定义的realm的认证方法
-            subject.getSession().setTimeout(5*60*60*1000);  //5小时有效期 5*60*60*1000
+            subject.getSession().setTimeout(-10001);  //5小时有效期 5*60*60*1000 -10001永不超时
             ret.setData(token);
         }catch (UnknownAccountException e) {
             return ReturnData.getFailData("账号错误或账号不存在");

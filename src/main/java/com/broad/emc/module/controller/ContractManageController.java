@@ -991,23 +991,108 @@ public class ContractManageController  {
 
     /**
      *  收款数据拆分-保存拆分数据
-     * @param u8Info
+     * @param u8InfoVoList
      * @return
      */
-    @RequestMapping("/addSkSplitData")
-    public ReturnData addSkSplitData(@RequestBody U8Info u8Info){
+    @RequestMapping("/addSplitData")
+    @Transactional(rollbackFor = Exception.class)
+    public ReturnData addSplitData(@RequestBody List<U8InfoVo> u8InfoVoList){
         ReturnData ret=ReturnData.getSuccessData();
-        if (u8Info == null) {
+        System.out.println(u8InfoVoList);
+        if (u8InfoVoList == null) {
             return ReturnData.getFailData("缺少参数");
         }
         try {
-            int res=contractManageService.addSkCfData(u8Info);
-            if(res>0){
-                ret.setMsg("收款数据拆分成功");
+            for(U8InfoVo u8InfoVo:u8InfoVoList){
+                contractManageService.addSkCfData(u8InfoVo);
             }
+            
+            ret.setMsg("收款数据拆分成功");
+            
         } catch (Exception e) {
             log.error("收款数据拆分失败，异常：{}", e);
             return ReturnData.getExceptionData("收款数据拆分失败，异常");
+        }
+
+        return ret;
+    };
+
+    /**
+     *  判断是否为已拆分数据
+     * @param u8InfoVo
+     * @return
+     */
+    @RequestMapping("/isSplitData")
+    public ReturnData isSplitData(@RequestBody U8InfoVo u8InfoVo){
+        System.out.println("111=="+u8InfoVo);
+        ReturnData ret=ReturnData.getSuccessData();
+        if (u8InfoVo == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try {
+            
+            //核对数据是否能拆分
+            List<U8InfoVo> u8InfoVos= contractManageService.CheckSplitData(u8InfoVo);
+            ret.setData(u8InfoVos);
+                
+        } catch (Exception e) {
+            log.error("收款数据拆分失败，异常：{}", e);
+            return ReturnData.getExceptionData("查询失败，异常");
+        }
+
+        return ret;
+    };
+
+
+
+
+    /**
+     *  收款调整拆分数据
+     * @param u8InfoVoList
+     * @return
+     */
+    @RequestMapping("/updateSplitData")
+    @Transactional(rollbackFor = Exception.class)
+    public ReturnData updateSplitData(@RequestBody List<U8InfoVo> u8InfoVoList){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (u8InfoVoList == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try {
+            for(U8InfoVo u8InfoVo:u8InfoVoList){
+                contractManageService.updateSkCfData(u8InfoVo);
+                ret.setMsg("修改成功");
+            }
+            
+        } catch (Exception e) {
+            log.error("收款数据拆分失败，异常：{}", e);
+            return ReturnData.getExceptionData("修改失败，异常");
+        }
+
+        return ret;
+    };
+
+    /**
+     *  收款根据日期查询拆分数据
+     * @param yyxmbh rq
+     * @return
+     */
+    @RequestMapping("/querySkSplitData")
+    public ReturnData querySkSplitData(@RequestParam("yyxmbh") String yyxmbh,@RequestParam("rq") String rq){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (yyxmbh == null || rq == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try {
+            
+                List<U8Info> u8InfoList=contractManageService.getSkSplitData(yyxmbh,rq);
+            
+            ret.setData(u8InfoList);
+            ret.setMsg("查询收款拆分数据成功");
+
+        } catch (Exception e) {
+            log.error("收款数据拆分失败，异常：{}", e);
+            return ReturnData.getExceptionData("查询收款拆分数据失败，异常");
         }
 
         return ret;
@@ -1092,6 +1177,176 @@ public class ContractManageController  {
 
         return ret;
     }
+
+
+    /**
+     * 查询合同U8数据
+     * yyxmbh 运营项目编号
+     * ny 日期年月
+     * type 收入成本费用到款
+     */
+    @RequestMapping("/getU8List")
+    public ReturnData getU8List(@RequestParam("yyxmbh")  String yyxmbh,@RequestParam("ny") String ny,@RequestParam("type") String type){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (yyxmbh == null || ny == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try{
+            List<U8InfoVo> u8Infos= contractManageService.getU8InfoList(yyxmbh,ny,type);
+            
+            ret.setData(u8Infos);
+            ret.setMsg("查询合同收款信息成功");
+            
+        }catch (Exception e){
+            log.error("查询合同收款信息异常，异常：{}", e);
+            return ReturnData.getExceptionData("查询合同收款信息，异常");
+        }
+
+        return ret;
+    }
+
+    /**
+     * 查询合同历史拆分数据
+     */
+    @RequestMapping("/querySplitHistoryData")
+    public ReturnData querySplitHistoryData(@RequestParam("yyxmbh")  String yyxmbh,@RequestParam("ny") String ny,
+                                            @RequestParam("nyNew") String nyNew,@RequestParam("type") String type){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (yyxmbh == null || type == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try{
+            List<U8InfoVo> u8InfoVoList= contractManageService.getSplitHistoryData(yyxmbh,ny,nyNew,type);
+
+            ret.setData(u8InfoVoList);
+            ret.setMsg("查询合同收款历史拆分数据成功");
+
+        }catch (Exception e){
+            log.error("查询合同收款历史拆分数据异常，异常：{}", e);
+            return ReturnData.getExceptionData("查询合同历史拆分数据，异常");
+        }
+
+        return ret;
+    }
+
+
+
+    /**
+     * 获取U8收入成本费用到款数据
+     */
+    @RequestMapping("/getU8Data")
+    public ReturnData getU8Data(@RequestParam("xmdh")  String xmdh,@RequestParam("ny") String ny){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (xmdh == null || ny == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try{
+            List<U8InfoVo> u8Infos= contractManageService.getU8DataList(xmdh,ny);
+
+            ret.setData(u8Infos);
+            ret.setMsg("查询U8数据成功");
+
+        }catch (Exception e){
+            log.error("查询U8数据异常，异常：{}", e);
+            return ReturnData.getExceptionData("查询U8数据，异常");
+        }
+
+        return ret;
+    }
+
+
+    /**
+     * 获取U8客户编号信息
+     */
+    @RequestMapping("/getU8Khbh")
+    public ReturnData getU8Khbh(@RequestBody U8KhbhVo u8KhbhVo){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (u8KhbhVo == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try{
+            List<U8KhbhVo> u8Infos= contractManageService.getU8KhbhList(u8KhbhVo);
+
+            ret.setData(u8Infos);
+            ret.setMsg("查询U8客户编号数据成功");
+
+        }catch (Exception e){
+            log.error("查询U8数据异常，异常：{}", e);
+            return ReturnData.getExceptionData("查询U8客户编号数据，异常");
+        }
+
+        return ret;
+    }
+
+
+
+    /**
+     * 添加U8客户编号信息
+     */
+    @RequestMapping("/saveU8Khbh")
+    @Transactional(rollbackFor = Exception.class)
+    public ReturnData saveU8Khbh(@RequestBody  List<U8KhbhVo> u8KhbhVoList){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (u8KhbhVoList == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try{
+            for(U8KhbhVo u8KhbhVo :u8KhbhVoList){
+                contractManageService.saveU8Khbh(u8KhbhVo);
+            }
+
+        }catch (Exception e){
+            log.error("U8客户编号添加失败，异常：{}", e);
+            return ReturnData.getExceptionData("U8客户编号添加失败，异常");
+        }
+
+        return ret;
+    }
+
+
+    /**
+     * 更新U8客户编号信息
+     */
+    @RequestMapping("/updateU8Khbh")
+    @Transactional(rollbackFor = Exception.class)
+    public ReturnData updateU8Khbh(@RequestBody  List<U8KhbhVo> u8KhbhVoList){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (u8KhbhVoList == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try{
+            for(U8KhbhVo u8KhbhVo :u8KhbhVoList){
+                contractManageService.updateU8Khbh(u8KhbhVo);
+            }
+
+        }catch (Exception e){
+            log.error("U8客户编号更新失败，异常：{}", e);
+            return ReturnData.getExceptionData("U8客户编号更新失败，异常");
+        }
+
+        return ret;
+    }
+
+    /**
+     * 删除U8客户编号信息
+     */
+    @RequestMapping("/delU8Khbh")
+    @Transactional(rollbackFor = Exception.class)
+    public ReturnData delU8Khbh(@RequestBody  U8KhbhVo u8KhbhVo){
+        ReturnData ret=ReturnData.getSuccessData();
+        if (u8KhbhVo == null) {
+            return ReturnData.getFailData("缺少参数");
+        }
+        try{
+            contractManageService.delU8Khbh(u8KhbhVo);
+        }catch (Exception e){
+            log.error("U8客户编号添加失败，异常：{}", e);
+            return ReturnData.getExceptionData("U8客户编号删除失败，异常");
+        }
+
+        return ret;
+    }
+
 
 
 

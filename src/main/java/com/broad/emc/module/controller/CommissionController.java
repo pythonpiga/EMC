@@ -335,48 +335,7 @@ public class CommissionController {
     
     
     /**
-     * 无奖励年份记录
-     *
-     * @param flag true 新增无奖励年份  false 清除已记录的无奖励年份
-     * @return
-     */
-//    @Transactional(rollbackFor = Exception.class)
-//    public void noRewardRecord(String htsno, String year, String jd, Boolean flag) throws ParseException {
-//        //获得当期的上一年年份
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy");
-//        Date dt = sdf.parse(year);
-//        Calendar rightNow = Calendar.getInstance();
-//        rightNow.setTime(dt);
-//        rightNow.add(Calendar.YEAR, -1);// 日期减1年
-//        Date dt1 = rightNow.getTime();
-//        String LastYear = sdf.format(dt1);
-//
-//        //当前时间
-//        String curmonth = "1".equals(jd) ? "03-31" : "2".equals(jd) ? "06-30" : "3".equals(jd) ? "09-30" : "4".equals(jd) ? "12-31" : "";
-//        String time = year + "-" + curmonth;
-//
-//        HtTcjg htTcjg = new HtTcjg();
-//        htTcjg.setHtSno(htsno);
-//        htTcjg.setYear(year);
-//        htTcjg.setTcry("");
-//        htTcjg.setWdbnf(flag == true ? LastYear : "");
-//        htTcjg.setJd(flag == true ? jd : "");
-//        htTcjg.setTime(time);
-//
-//        List<HtTcjg> tcjgInfo = commissionService.getTcjg(htTcjg);
-//        if (tcjgInfo.size() == 0) {
-//            //新增 记录未达标年份
-//            commissionService.saveTcjg(htTcjg);
-//        } else {
-//            //更新 记录未达标年份
-//            commissionService.updateTcjg(htTcjg);
-//        }
-//
-//    }
-    
-
-    /**
-     * 计算提成 大型EMC提成奖励 
+     * 计算提成-大型EMC提成奖励 
      * admin权限
      * @MyArchivesLog 操作日志记录
      * @param year 年份 lx 奖励类型  jd  季度
@@ -682,125 +641,6 @@ public class CommissionController {
     }
 
     
-    
-    
-    
-   
-    
-
-    /**
-     * 到款
-     * 前5年预留30%计奖基数
-     * ps:去除未达标的年份数据
-     * @param
-     * @return
-     */
-//    public Map<String, Object> getDkJjjs5s(List<HtExcelData> htExcelDataList,LocalDate curtime,String year,String jd,String yyrq,HtxxVo htxxVo) throws ParseException {
-//        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd");
-//        Map<String ,Object> map=new HashMap<>();
-//        BigDecimal jjjs5s=new BigDecimal( "0" );
-//
-//        //时间判断 2021.7.1-当前季度时间 是否有5年 否则不用计算
-//        int num = TimeUtil.calculateMonthDifference(sdf.parse("2021-07-01").toInstant().atZone(ZoneId.systemDefault()).toLocalDate(), curtime);
-//        if (num >= 5 * 12) {
-//            // 计算前5年的净利润率
-//            Map<String, Object> lrl5sInfo= getEmcAndDkLrl5s(htExcelDataList,htxxVo.getHtsno(),year,jd);
-//            if ((double) lrl5sInfo.get("lrl5s") >= 0.08) {
-//                log.info("=============当期能耗合同前5年净利润率：" + lrl5sInfo.get("lrl5s") + ">=0.08,开始计算前5年预留的30%奖励===================");
-//
-//                //ex: 计算2028第二季度预留的30%  时间应该是2023.4.1 - 2023.6.30 2023年的第二季度
-//                //计算发放前5年对应季度剩余的30%  
-//
-//                //5年前的当前季度 2023 第二季度
-//                String endTime=(Integer.parseInt(year) - 5)+"-"+("1".equals(jd) ? "03-31" : "2".equals(jd) ? "06-30" : "3".equals(jd) ? "09-30" : "4".equals(jd) ? "12-31" : "");
-//
-//                //5年前的当前季度的前一个季度 2023 第一季度
-//                String startTime=("1".equals(jd) ? (Integer.parseInt(year) - 6) : (Integer.parseInt(year) - 5))+"-"+
-//                        ("1".equals(jd) ? "12-31" : "2".equals(jd) ? "03-31" : "3".equals(jd) ? "06-30" : "4".equals(jd) ? "09-30" : "");
-//
-//                //1. 起始时间的累计计奖基数 去除未达标的年份数据
-//                BigDecimal dk_st = new BigDecimal("12606078.11");                                                                                        //累计截止至起始时间 去除未达标年份数据 待解决 U8客户明细账
-//                BigDecimal nf_st  = new BigDecimal(htExcelDataList.get(0).getNf2021() == null ? "0" : htExcelDataList.get(0).getNf2021().toString());         //累计截止至起始时间 去除未达标年份数据 年服 excel取数
-//                BigDecimal dj_st  = new BigDecimal(htExcelDataList.get(0).getDj2021() == null ? "0" : htExcelDataList.get(0).getDj2021().toString());        //累计截止至起始时间  去除未达标年份数据 定金 excel取数
-//                BigDecimal zscp_st  = new BigDecimal(htExcelDataList.get(0).getZscp2021() == null ? "0" : htExcelDataList.get(0).getZscp2021().toString());   //累计截止至起始时间 去除未达标年份数据 赠送产品 excel取数
-//
-//                //运营时间
-//                LocalDate yysj = sdf.parse(yyrq).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//                LocalDate startDate = sdf.parse(startTime).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//                //相差月数
-//                int monthnum1 = TimeUtil.calculateMonthDifference(yysj, startDate);
-//
-//                //获取当前时间节点前未达标年份 
-//                List<String> lists = commissionService.getWdbnf(htxxVo.getHtsno(), startTime);
-//                //每有一年未达标 去掉该年的投资分摊
-//                for (String item : lists) {
-//                    if (item != null && !"".equals(item)) {
-//                        monthnum1 = monthnum1 - 12;
-//                    }
-//                }
-//                BigDecimal tzft_st = new BigDecimal(htExcelDataList.get(0).getSbft() == null ? "0" : htExcelDataList.get(0).getSbft().multiply(new BigDecimal(monthnum1)).toString());
-//
-//                //水电气抵扣额
-//                List<HtExcelData> list = commissionService.getHtExcelData(htxxVo.getHtsno(),startTime.substring(0,4));
-//                BigDecimal sdqdke_st=list.get(0).getSdqdke();
-//                
-//                //对运营款(到款)进行判断 到款<=1500 按50%计算
-//                if (dk_st.compareTo(new BigDecimal("15000000")) <= 0) {
-//                    dk_st = dk_st.multiply(new BigDecimal("0.5"));
-//                }
-//                
-//                BigDecimal jjjs_st = dk_st.add(sdqdke_st).subtract(tzft_st).subtract(nf_st).subtract(dj_st).subtract(zscp_st);
-//
-//
-//                //2. 结束时间的累计计奖基数 去除未达标的年份数据
-//                BigDecimal dk_end = new BigDecimal("12606078.11");                                                                                        //累计截止至结束时间 去除未达标年份数据 待解决 U8客户明细账
-//                BigDecimal nf_end = new BigDecimal(htExcelDataList.get(0).getNf2021() == null ? "0" : htExcelDataList.get(0).getNf2021().toString());         //累计截止至结束时间 去除未达标年份数据 年服 excel取数
-//                BigDecimal dj_end  = new BigDecimal(htExcelDataList.get(0).getDj2021() == null ? "0" : htExcelDataList.get(0).getDj2021().toString());        //累计截止至结束时间  去除未达标年份数据 定金 excel取数
-//                BigDecimal zscp_end  = new BigDecimal(htExcelDataList.get(0).getZscp2021() == null ? "0" : htExcelDataList.get(0).getZscp2021().toString());   //累计截止至结束时间 去除未达标年份数据 赠送产品 excel取数
-//
-//                LocalDate endDate = sdf.parse(endTime).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-//                //相差月数
-//                int monthnum2 = TimeUtil.calculateMonthDifference(yysj, endDate);
-//
-//                //获取当前时间节点前未达标年份 
-//                List<String> stringList = commissionService.getWdbnf(htxxVo.getHtsno(), endTime);
-//                //每有一年未达标 去掉该年的投资分摊
-//                for (String item : stringList) {
-//                    if (item != null && !"".equals(item)) {
-//                        monthnum2 = monthnum2 - 12;
-//                    }
-//                }
-//                BigDecimal tzft_end = new BigDecimal(htExcelDataList.get(0).getSbft() == null ? "0" : htExcelDataList.get(0).getSbft().multiply(new BigDecimal(monthnum2)).toString());
-//
-//                //水电气抵扣额
-//                List<HtExcelData> list_end = commissionService.getHtExcelData(htxxVo.getHtsno(),endTime.substring(0,4));
-//                BigDecimal sdqdke_end=list_end.get(0).getSdqdke();
-//
-//                //对运营款(到款)进行判断 到款<=1500 按50%计算
-//                if (dk_end.compareTo(new BigDecimal("15000000")) <= 0) {
-//                    dk_end = dk_end.multiply(new BigDecimal("0.5"));
-//                }
-//                
-//                BigDecimal jjjs_end = dk_end.add(sdqdke_end).subtract(tzft_end).subtract(nf_end).subtract(dj_end).subtract(zscp_end);
-//
-//                //前5年对应季度应发的预留30%
-//                jjjs5s= ( jjjs_end.subtract(jjjs_st) ) .multiply( new BigDecimal("0.3" ) );
-//                log.info("=============前5年剩余30%的计奖基数：" + jjjs5s + "===================");
-//
-//
-//            }
-//
-//        }
-//
-//        map.put("jjjs5s",jjjs5s);
-//        return map;
-//
-//    }
-
-
-    
-
-
     /**
      * 净利润率计算
      * 记录历年净利润率达标情况(2022及以后)
@@ -821,11 +661,11 @@ public class CommissionController {
         //1.1 遍历年份 获取2022年后净利润达标情况 （净利润率未达标的年份不参与计算只针对2022年及以后）
         for(int i=2022;i<=Integer.parseInt(year);i++ ){
             //1.2 获取该合同净利润率及年份信息
-            HtDb htdb= commissionService.getDbInfo(htxxVo.getHtsno(),String.valueOf(i));
+            HtDb htdb= commissionService.getDbInfo(htxxVo.getHtsno(),String.valueOf(i),null);
             //1.3. 获取指定年份各部分数据             
-            BigDecimal sr=new BigDecimal (getU8Info(htxxVo.getHtsno(),String.valueOf(i),jd,0).get("sr") ) ;
-            BigDecimal nhcb=new BigDecimal (getU8Info(htxxVo.getHtsno(),String.valueOf(i),jd,0).get("cb") ) ;
-            BigDecimal fy=new BigDecimal (getU8Info(htxxVo.getHtsno(),String.valueOf(i),jd,0).get("fy") ) ;
+            BigDecimal sr=new BigDecimal (getU8Info(htxxVo.getHtsno(),htxxVo.getYyxmbh(),String.valueOf(i),jd,0).get("sr") ) ;
+            BigDecimal nhcb=new BigDecimal (getU8Info(htxxVo.getHtsno(),htxxVo.getYyxmbh(),String.valueOf(i),jd,0).get("cb") ) ;
+            BigDecimal fy=new BigDecimal (getU8Info(htxxVo.getHtsno(),htxxVo.getYyxmbh(),String.valueOf(i),jd,0).get("fy") ) ;         //费用包含设备分摊
             //BigDecimal sbft = new BigDecimal(htExcelDataList.get(0).getSbft() == null ? "0" : htExcelDataList.get(0).getSbft().multiply(new BigDecimal(12)).toString());
 
             double lrl;          //净利润率
@@ -837,21 +677,21 @@ public class CommissionController {
                         .divide(sr, 4, BigDecimal.ROUND_HALF_UP)).doubleValue();
                 if(lrl>=0.08)
                     isDb="1";
-            } else {      // 能耗总包  （1-9%*12%）*85%）
+            }else {      // 能耗总包  （1-9%*12%）*85%）
                 lrl = (((sr.subtract(nhcb).subtract(fy)).multiply(new BigDecimal(0.9892)).multiply(new BigDecimal(0.85)))
                         .divide(sr, 4, BigDecimal.ROUND_HALF_UP)).doubleValue();
                 if(lrl>=0.05)
                     isDb="1";
             }
             
-            if(i==Integer.parseInt(year)) {       //本年数据
+            if(i==Integer.parseInt(year)) {       //当期年份 数据
                 Lrl = lrl;
                 Sr = sr;
                 Nhcb = nhcb;
                 Fy = fy;
             }
                 
-            if(i==Integer.parseInt(year)-1)     //去年净利润率
+            if(i==Integer.parseInt(year)-1)     //当期年份前一年 净利润率
                 LastLrl=lrl;
 
             //1.5 记录净利润率及年份信息
@@ -887,53 +727,86 @@ public class CommissionController {
      * 获取U8信息 
      * @param year 0:计算指定年份U8数据  1:计算历年累计U8数据  2:计算截止2021.12.31的累计U8数据  3:前5年累计U8数据  4:到款(客户明细账)的最后到款数据 5:指定年份的指定季度数据
      */
-    public Map<String, String> getU8Info(String htsno, String year,String jd, int flag){
+    public Map<String, String> getU8Info(String htsno,String yyxmbh, String year,String jd, int flag){
         BigDecimal sr = new BigDecimal("0");
         BigDecimal cb = new BigDecimal("0");
         BigDecimal fy = new BigDecimal("0");
         BigDecimal dk = new BigDecimal("0");
         String dksj="";
 
+        //当前季度时间
+        String curmonth = "1".equals(jd) ? "03-31" : "2".equals(jd) ? "06-30" : "3".equals(jd) ? "09-30" : "4".equals(jd) ? "12-31" : "";
+        String curtime = year + "-" + curmonth;
+        
+        String startMonth="1".equals(jd) ? "01-01" : "2".equals(jd) ? "04-01" : "3".equals(jd) ? "07-01" : "4".equals(jd) ? "10-01" : "";;
+        String endMonth="1".equals(jd) ? "03-31" : "2".equals(jd) ? "06-30" : "3".equals(jd) ? "09-30" : "4".equals(jd) ? "12-31" : "";;
+
+        String startTime= year+"-"+startMonth;
+        String endTime= year+"-"+endMonth;
+        
         Map<String,String> map=new HashMap<>();
-        if(flag==1){
-            //计算历年累计U8数据 去除未达标年份数据
-            //查询未达标年份
-            List<HtDb> htDbList = commissionService.getUnDbList (htsno);
-            //测试
-            dk=new BigDecimal("50519776.26");
+        
+        if(flag==1){    //计算历年累计U8到款数据 去除未达标年份数据
+            dk=contractManageService.getU8DkList(htsno,yyxmbh,curtime,null,null).getDk();
+            
+            //dk=new BigDecimal("50519776.26");
+            log.info("@tkh计算计奖基数当前年份"+year+"年的到款2023.12==50519776.26=="+dk);
 
             map.put("dk",dk.toString());
-
         }else if(flag==2){
             //计算截止2021.12.31的累计U8数据  无需去除未达标年份数据（2022年开始执行）
             //测试
-            dk=new BigDecimal("42426448.26");
+            //dk=new BigDecimal("42426448.26");
             map.put("dk",dk.toString());
-
-
-        }else if(flag==3){
-            //前5年累计U8数据  去除未达标年份数据（2022年开始执行）
-        }else if(flag==4){
-            //到款(客户明细账)的最后到款数据
-            //测试
-            dksj="2023-11-30";
-            map.put("dksj",dksj);
-        }else if(flag==5){
-            //指定年份的指定季度数据 2023第2季度 2023.4.1-2023.6.30
             
-        }else{
-            //计算指定年份U8数据
-            //当期数据使用jd
-            //测试
-            if("2022".equals(year)){
-                sr=new BigDecimal("11110084.37");
-                cb=new BigDecimal("7360096.76");
-                fy=new BigDecimal("1897519.19");
-            }else if("2023".equals(year)){
-                sr=new BigDecimal("11123845.87");
-                cb=new BigDecimal("7253020.29");
-                fy=new BigDecimal("2289899.54");
+        }else if(flag==3){  //前5年累计U8数据 ps:2028年第4季度的前5年数据-2023.10.1-2028.12.31    去除未达标年份数据（2022年开始执行） 
+            startTime=(Integer.valueOf(year)-5)+"-"+curmonth;
+            //待完成
+            sr=contractManageService.getU8ListByTime(htsno,yyxmbh,null,startTime,curtime,"sr").getSr();
+            cb=contractManageService.getU8ListByTime(htsno,yyxmbh,null,startTime,curtime,"cb").getCb();
+            fy=contractManageService.getU8ListByTime(htsno,yyxmbh,null,startTime,curtime,"fy").getFy();
+
+            log.info("@tkh当前时间"+year+",前5年计算净利润累计U8收入数据=="+sr);
+            log.info("@tkh当前时间"+year+",前5年计算净利润累计U8成本数据=="+cb);
+            log.info("@tkh当前时间"+year+",前5年计算净利润累计U8费用数据=="+fy);
+            
+            map.put("sr",sr.toString());
+            map.put("cb",cb.toString());
+            map.put("fy",fy.toString());
+            
+        }else if(flag==4){  //当前季度的到款(客户明细账)的最后到款数据时间 算入设备分摊期数
+            String ny=contractManageService.getU8DkSjsj(htsno,yyxmbh,curtime).getNy();
+            year=ny.substring(0,4);
+            String day=ny.substring(4,6);
+            if("01".equals(day) || "03".equals(day) || "05".equals(day)
+                    || "07".equals(day) || "08".equals(day) || "10".equals(day)
+                    || "12".equals(day)){
+                day=day+"-31";
+            }else{
+                day=day+"-30";
             }
+            dksj=year+"-"+day;
+            
+            //测试
+            //dksj="2023-11-30";
+            log.info("@tkh当前时间"+year+",到款实际最后取数时间=="+dksj);
+            
+            map.put("dksj",dksj);
+            
+        }else if(flag==5){    //指定年份的指定季度到款数据 2023第2季度 2023.4.1-2023.6.30
+            dk=contractManageService.getU8DkList(htsno,yyxmbh,null,startTime,endTime).getDk();
+
+            map.put("dk",dk.toString());
+        }else{  // flag=0  计算指定年份U8数据
+            HtDb htdb= commissionService.getDbInfo(htsno,year,"0");
+            if(htdb==null){         //达标
+                sr=contractManageService.getU8ListByTime(htsno,yyxmbh,year,null,null,"sr").getSr();
+                cb=contractManageService.getU8ListByTime(htsno,yyxmbh,year,null,null,"cb").getCb();
+                fy=contractManageService.getU8ListByTime(htsno,yyxmbh,year,null,null,"fy").getFy();
+            }
+            log.info("@tkh计算净利润率当前年份"+year+"年的收入=="+sr);
+            log.info("@tkh计算净利润率当前年份"+year+"年的成本=="+cb);
+            log.info("@tkh计算净利润率当前年份"+year+"年的fy=="+fy);
 
             map.put("sr",sr.toString());
             map.put("cb",cb.toString());
@@ -954,7 +827,7 @@ public class CommissionController {
      */
     public Map<String, Object> getEmcJjjs(List<HtExcelData> htExcelDataList, HtxxVo htxxVo, String year, String jd) throws ParseException {
         //1.计奖基数的数据 （计算计奖基数=到款-投资分摊-年服-定金-赠送产品 ，注意：取累计 运营时间开始-当前季度截止 去除未达标的年份数据）
-        BigDecimal dk = new BigDecimal(getU8Info(htxxVo.getHtsno(),year,jd,1).get("dk"));         //当期累计到款(累计 运营时间开始-当前季度截止 去除未达标的年份数据) 待解决 U8客户明细账
+        BigDecimal dk = new BigDecimal(getU8Info(htxxVo.getHtsno(),htxxVo.getYyxmbh(),year,jd,1).get("dk"));         //当期累计到款(累计 运营时间开始-当前季度截止 去除未达标的年份数据) 待解决 U8客户明细账
         BigDecimal nf = new BigDecimal(htExcelDataList.get(0).getNf() == null ? "0" : htExcelDataList.get(0).getNf().toString());           //当期累计年服(累计到季，可取当年) excel取数
         BigDecimal dj = new BigDecimal(htExcelDataList.get(0).getDj() == null ? "0" : htExcelDataList.get(0).getDj().toString());           //当期累计定金(累计到季，可取当年) excel取数
         BigDecimal zscp = new BigDecimal(htExcelDataList.get(0).getZscp() == null ? "0" : htExcelDataList.get(0).getZscp().toString());     //当期累计赠送产品(累计到季，可取当年) excel取数
@@ -963,8 +836,8 @@ public class CommissionController {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         //运营时间
         LocalDate yysj = sdf.parse(htxxVo.getYyqsrq()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        //当前季度取数时间 U8客户明细账=到款 截止当前季度最后一次到款记录时间
-        String dksj=getU8Info(htxxVo.getHtsno(),year,jd,4).get("dksj");
+        //当前季度实际到款取数时间计算分摊期数 U8客户明细账=到款 截止当前季度最后一次到款记录时间
+        String dksj=getU8Info(htxxVo.getHtsno(),htxxVo.getYyxmbh(),year,jd,4).get("dksj");
         LocalDate time = sdf.parse(dksj).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         //相差月数
         int monthnum = TimeUtil.calculateMonthDifference(yysj, time);
@@ -1010,7 +883,7 @@ public class CommissionController {
      */
     public Map<String, Object> getDkJjjs(List<HtExcelData> htExcelDataList, HtxxVo htxxVo, String year, String jd) throws ParseException {
         //1. 计奖基数的数据 （计算计奖基数=到款(100%/50%)+水电气抵扣额(80%excel已计算)-投资分摊-年服-定金-赠送产品)       注意：取累计 运营时间开始-当前季度截止 去除未达标的年份数据
-        BigDecimal dk = new BigDecimal(getU8Info(htxxVo.getHtsno(),year,jd,1).get("dk"));                                               //当期累计到款(累计 运营时间开始-当前季度截止 去除未达标的年份数据) 待解决 U8客户明细账
+        BigDecimal dk = new BigDecimal(getU8Info(htxxVo.getHtsno(),htxxVo.getYyxmbh(),year,jd,1).get("dk"));                                               //当期累计到款(累计 运营时间开始-当前季度截止 去除未达标的年份数据) 待解决 U8客户明细账
         //1.1. 到款计数 （判断时间 2021.7.1）
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         if(htxxVo.getQdrq().after( sdf.parse("2021-06-30") )){      //before/after 不包含当天
@@ -1029,7 +902,7 @@ public class CommissionController {
         //运营时间
         LocalDate yysj = sdf.parse(htxxVo.getYyqsrq()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         //当前季度取数时间 U8客户明细账=到款 截止当前季度最后一次到款记录时间
-        String dksj=getU8Info(htxxVo.getHtsno(),year,jd,4).get("dksj");
+        String dksj=getU8Info(htxxVo.getHtsno(),htxxVo.getYyxmbh(),year,jd,4).get("dksj");
         LocalDate time = sdf.parse(dksj).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         //相差月数
         int monthnum = TimeUtil.calculateMonthDifference(yysj, time);
@@ -1074,7 +947,7 @@ public class CommissionController {
      */
     public String getEMCTcxx(HtxxVo htxxVo,String year,String jd,Map<String, Object> lrlInfo,Map<String, Object> jjjsInfo,double Lrl,BigDecimal jjjs,List<HtExcelData> htExcelDataList) throws ParseException {
 
-        BigDecimal jjjs5s=null;        //前5年计奖基数30%
+        BigDecimal jjjs5s=null;                                 //前5年计奖基数30%
         String yffjl= htExcelDataList.get(0).getYffjl2021();    //已发放金额
 
         //1. 根据合同序号htsno查找提成人员信息
@@ -1095,7 +968,6 @@ public class CommissionController {
                 htTcjg.setDk((BigDecimal) jjjsInfo.get("dk"));
                 htTcjg.setDj((BigDecimal) jjjsInfo.get("dj"));
                 htTcjg.setZscp((BigDecimal) jjjsInfo.get("zscp"));
-                htTcjg.setZscp((BigDecimal) jjjsInfo.get("tzft"));
                 htTcjg.setJlrl(new BigDecimal(Lrl).setScale(4, BigDecimal.ROUND_DOWN));
                 htTcjg.setTcry(htywyVo.getKhjl());
                 htTcjg.setTime(curtime);
@@ -1108,9 +980,15 @@ public class CommissionController {
                 BigDecimal tcje;                                //提成金额
                 String tcbl="1.0";                              //提成比例
                 BigDecimal yffjl2021=new BigDecimal(0);     //截止2021.12.31已发放奖励
-                
-                //在职状态 0 离职 1 在职 2 调岗 3继任
-                if("0".equals( htywyVo.getType() ) || "2".equals( htywyVo.getType() ) || "3".equals( htywyVo.getType() )  ){
+
+                //离职、继任 无奖励
+                if("离职".equals( htywyVo.getType() ) || ( !"".equals( htywyVo.getParentYwyId()) &&  htywyVo.getParentYwyId()!=null  )   ){
+                    //职位状态
+                    if("0".equals(htywyVo.getFlag())){
+                        htTcjg.setStatus("离职");
+                    }else{
+                        htTcjg.setStatus("继任");
+                    }
                     //人员类型
                     htTcjg.setRylx(htywyVo.getRylb());
                     //提成比例
@@ -1119,7 +997,10 @@ public class CommissionController {
                     htTcjg.setTcje(new BigDecimal(0));
                     htTcjg.setTcje5s(new BigDecimal(0));
 
-                }else{  //在职
+                }else{  //在职 开始计算提成奖励
+                    //职位状态
+                    htTcjg.setStatus("在职");
+                    
                     if ( !"".equals(htywyVo.getTcbl())) {
                         tcbl = htywyVo.getTcbl();
                     }
@@ -1153,17 +1034,17 @@ public class CommissionController {
 
                     //2. 计算提成奖励
                     if ("0".equals(htxxVo.getSfnhzbht())) {
-                        //2.1 非能耗总包(奖励=计奖基数*1% || 计奖基数*0.2%)
+                        //2.1 非能耗总包(奖励=计奖基数*1% || 计奖基数*0.2%)  累计提成奖励
                         tcje = jjjs.multiply(new BigDecimal(tcbl)).multiply(new BigDecimal(percent));
                     }else {
                         //2.2 能耗总包2021.12.31之后(奖励=计奖基数*1%*70% )
                         //2.2.1 计算总计奖基数提成奖励（运营起始日期-当期季度）
                         BigDecimal ztcje = jjjs.multiply(new BigDecimal(tcbl)).multiply(new BigDecimal(percent));
 
-                        //提成金额=已发放奖励+（2022-当前季度奖励）*70%
+                        //提成金额=已发放奖励+（2022-当前季度奖励）*70%  累计提成奖励
                         tcje=yffjl2021.add(  (ztcje.subtract(yffjl2021)).multiply(new BigDecimal(0.7))  );
 
-                        //2.3 计算前5年是否发放剩余的30%(能耗总包)
+                        //2.3 计算前5年是否发放剩余的30%(能耗总包) 季度提成奖励
                         Map<String, Object> emcJjjs5s= getEmcJjjs5s(htExcelDataList, LocalDate.parse(jjjsInfo.get("curtime").toString()), year, jd,htxxVo.getYyqsrq(),htxxVo.getHtsno());
                         jjjs5s= (BigDecimal) emcJjjs5s.get("jjjs5s");
                         BigDecimal tcje5s=jjjs5s.multiply(new BigDecimal(tcbl)).multiply(new BigDecimal(0.01));
@@ -1246,7 +1127,6 @@ public class CommissionController {
                 htTcjg.setDk((BigDecimal) jjjsInfo.get("dk"));
                 htTcjg.setDj((BigDecimal) jjjsInfo.get("dj"));
                 htTcjg.setZscp((BigDecimal) jjjsInfo.get("zscp"));
-                htTcjg.setZscp((BigDecimal) jjjsInfo.get("tzft"));
                 htTcjg.setJlrl(new BigDecimal(Lrl).setScale(4, BigDecimal.ROUND_DOWN));
                 htTcjg.setTcry(htywyVo.getKhjl());
                 htTcjg.setTime(curtime);
@@ -1264,6 +1144,12 @@ public class CommissionController {
                 //2021.7.1之前继任调岗无奖励  （在职状态 0 离职 1 在职 2 调岗 3继任）
                 if( ("0".equals( htywyVo.getType() ) || "2".equals( htywyVo.getType() ) || "3".equals( htywyVo.getType() )) 
                     && (htxxVo.getQdrq().before( sdf.parse("2021-07-01") ) )  ){
+                    //职位状态
+                    if("0".equals(htywyVo.getFlag())){
+                        htTcjg.setStatus("离职");
+                    }else{
+                        htTcjg.setStatus("继任");
+                    }
                     //人员类型
                     htTcjg.setRylx(htywyVo.getRylb());
                     //提成比例
@@ -1273,6 +1159,9 @@ public class CommissionController {
                     htTcjg.setTcje5s(new BigDecimal(0));
 
                 }else{  //在职
+                    //职位状态
+                    htTcjg.setStatus("在职");
+                    
                     if ( !"".equals(htywyVo.getTcbl())) {
                         tcbl = htywyVo.getTcbl();
                     }
@@ -1374,7 +1263,7 @@ public class CommissionController {
     
     /**
      * 大型EMC（能耗总包）
-     * 前5年预留30%计奖基数
+     * 前5年预留30%计奖基数 季度提成奖励
      * ps:去除未达标的年份数据
      * @param
      * @return
@@ -1395,7 +1284,7 @@ public class CommissionController {
 
                 //ex: 计算2028第二季度前5年预留的30% =2023年的第二季度的30%，时间应该是2023.4.1 - 2023.6.30
                 String year5s=String.valueOf(Integer.parseInt(year) - 5);
-                BigDecimal dk5s=new BigDecimal( getU8Info(htSno,year5s,jd,5).get("dk")  );
+                BigDecimal dk5s=new BigDecimal( getU8Info(htSno,null,year5s,jd,5).get("dk")  );
                 //忽略一个季度的年服、赠送产品、定金 
                 BigDecimal tzft5s = new BigDecimal(htExcelDataList.get(0).getSbft() == null ? "0" : htExcelDataList.get(0).getSbft().multiply(new BigDecimal(3)).toString());
 
@@ -1479,9 +1368,9 @@ public class CommissionController {
      */
     public Map<String, Object> getEmcAndDkLrl5s(List<HtExcelData> htExcelDataList,String htsno,String year,String jd) throws ParseException {
         // 计算前5年净利润率  计5年的数据
-        BigDecimal sr5s = new BigDecimal(getU8Info(htsno,year,jd,3).get("sr"));                             //5年前-当期季度 前5年收入(不累计) 待解决 U8/600105贷
-        BigDecimal nhcb5s = new BigDecimal(getU8Info(htsno,year,jd,3).get("cb"));                           //5年前-当期季度 前5年能耗成本(不累计) 待解决 U8/520101贷
-        BigDecimal fy5s = new BigDecimal(getU8Info(htsno,year,jd,3).get("fy"));                                  //5年前-当期季度 前5年费用(不累计) 待解决 U8/520102借-52010212借
+        BigDecimal sr5s = new BigDecimal(getU8Info(htsno,null,year,jd,3).get("sr"));                             //5年前-当期季度 前5年收入(不累计) 待解决 U8/600105贷
+        BigDecimal nhcb5s = new BigDecimal(getU8Info(htsno,null,year,jd,3).get("cb"));                           //5年前-当期季度 前5年能耗成本(不累计) 待解决 U8/520101贷
+        BigDecimal fy5s = new BigDecimal(getU8Info(htsno,null,year,jd,3).get("fy"));                                  //5年前-当期季度 前5年费用(不累计) 待解决 U8/520102借-52010212借
 
         int monthnum=12*5;
         //获取未达标年份 

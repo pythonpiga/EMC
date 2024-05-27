@@ -68,15 +68,17 @@ public class CommissionServiceImpl implements CommissionService {
     }
 
     public int updateTcjg(HtTcjg htTcjg){
-        return calculateCommission.updateTcjgInfo(htTcjg);
+        //先删除再新增
+        calculateCommission.delTcjgInfo(htTcjg);
+        return calculateCommission.addTcjg(htTcjg);
     }
 
     public int saveDbInfo(HtDb htDb){
         return calculateCommission.addDbInfo(htDb);
     }
 
-    public HtDb getDbInfo(String htSno,String year){
-        return calculateCommission.queryDbInfo(htSno,year);
+    public HtDb getDbInfo(String htSno,String year,String db){
+        return calculateCommission.queryDbInfo(htSno,year,db);
     }
 
     public List<HtDb> getUnDbList(String htSno){
